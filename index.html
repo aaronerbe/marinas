@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marinas | Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <!--<link rel="stylesheet" href="/css/leaflet-label.css">-->
+    <!-- Add Windy API library -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+    <script src="/js/windy.js"></script>
+    <script src="/js/main.js" type="module"></script>
+    <style>
+        #windy {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+        
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    <header class="divider" id="main-header"></header>
+    <div class="hero">
+        <picture>
+            <source media="(max-width: 600px)" srcset="/images/banner-sm.jpg" />
+            <img src="/images/banner.jpg" alt="image of sailboats at dock at sunset" />
+        </picture>
+        <!--<div class="logo logo--square">
+            <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
+            <div>Sleep<span class="highlight">Outside</span></div>
+        </div>-->
+    </div>
+    <div id="windy"></div>
+
+    <main>
+    </main>
+
+    <footer id="main-footer"></footer>
+</body>
+</html>
