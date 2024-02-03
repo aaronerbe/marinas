@@ -1,6 +1,7 @@
 import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry} from "./utils.mjs";
 //import windyMap from "./windy.js";
-import { updateOptions } from "./windy.mjs";
+import { updateMapOptions } from "./windy.mjs";
+import { getMarinaInfoFromSearch } from "./marinas.mjs";
 
 loadHeaderFooter();
 
@@ -33,14 +34,18 @@ async function search(){
         console.log(city, state, country);
         // convert to coords
         const coords = await convertCoordToLocation(city, state, country);
-        console.log(coords);
-        console.log(coords.lat, coords.lng);
         const lat = coords.lat;
         const lon = coords.lng;
-        updateOptions(lat, lon);
-        //windyMap.init()
-        //initializeMap(lat, lon);
+        const marinas = await getMarinaInfoFromSearch(lat, lon)
+        console.log(marinas);
+        updateMapOptions(lat, lon, marinas);
+
     } catch (error) {
         console.error('An error occurred:', error);
     }
 }
+
+//const lat = '39.259790916124274';
+//const lon = '-76.6135644707624';
+////const url = buildBaseURL(lat, lon)
+//    console.log(`list = `, marinas);
