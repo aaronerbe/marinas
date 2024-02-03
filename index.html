@@ -9,36 +9,35 @@
     <!-- Add Windy API library -->
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
-    <script src="/js/windy.js"></script>
+    <script type="module" src="/js/windy.mjs"></script>
     <script src="/js/main.js" type="module"></script>
     <link rel="icon" href="favicon.ico">
 </head>
 <body>
-    <header class="divider" id="main-header"></header>
-    <div id="hero">
-        <picture>
-            <source media="(max-width: 600px)" srcset="/images/banner-sm.jpg" />
-            <img src="/images/banner.jpg" alt="image of sailboats at dock at sunset" />
-        </picture>
-        <div id="search-container">
-            <div id="search-favorites-dropdown">
-                <select>
-                    <option value="" disabled selected>Favorites</option>
-                    <!-- in mobile, place here.  In desktop, place in hamburger menu -->
-
-                    <!--<option value="location1">Saved Location 1</option>
-                    <option value="location2">Saved Location 2</option>
-                    <option value="location3">Saved Location 3</option>-->
-                    <!-- Dynamically populated from JS later prob using a template-->
-                </select>
-            </div>
-            <input type="text" id="searchInput" placeholder="City, State or Coordinates">
-            <button id="searchButton"><img src="images/icons/search.svg" alt="search button" width="25"></button>
-        </div>
-    </div>
-    <div id="windy" class="hidden"></div>
-
+    <header class="divider" id="main-header"></header>    
     <main>
+        <div id="hero">
+            <picture>
+                <source media="(max-width: 600px)" srcset="/images/banner-sm.jpg" />
+                <img src="/images/banner.jpg" alt="image of sailboats at dock at sunset" />
+            </picture>
+            <div id="search-container">
+                <div id="search-favorites-dropdown">
+                    <select>
+                        <option value="" disabled selected>Favorites</option>
+                        <!-- in mobile, place here.  In desktop, place in hamburger menu -->
+    
+                        <!--<option value="location1">Saved Location 1</option>
+                        <option value="location2">Saved Location 2</option>
+                        <option value="location3">Saved Location 3</option>-->
+                        <!-- Dynamically populated from JS later prob using a template-->
+                    </select>
+                </div>
+                <input type="text" id="searchInput" placeholder="City, State, Country OR lat, long">
+                <button id="searchButton"><img src="images/icons/search.svg" alt="search button" width="25"></button>
+            </div>
+        </div>
+        <div id="windy" class="hidden"></div>
     </main>
 
     <footer id="main-footer"></footer>
