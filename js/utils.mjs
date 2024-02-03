@@ -39,3 +39,42 @@ export function renderWithTemplate(templateFn, parentElement, position = "afterb
     //insert the template data at the beginning of the element.
     parentElement.insertAdjacentHTML(position, templateFn);
 }
+
+/* 
+░█▀▀░█░░░█▀▀░█▀█░█▀█░░░░░░░█▀▀░█▀█░█▀█░▀█▀░▀█▀░█▀█░█░░░▀█▀░▀▀█░█▀▀
+░█░░░█░░░█▀▀░█▀█░█░█░░▄█▄░░█░░░█▀█░█▀▀░░█░░░█░░█▀█░█░░░░█░░▄▀░░█▀▀
+░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░░░▀░░░▀▀▀░▀░▀░▀░░░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
+*/
+//remove dashes and capitalize a word used for category in a couple places
+export function capitalizeWord(word) {
+    if (word !== null) {
+    word = word.replace(/-/g, ' ');
+    const words = word.split(' ');
+    const capitalizedWords = words.map(w => w.charAt(0).toUpperCase() + w.slice(1));
+    return capitalizedWords.join(' ');}
+}
+
+
+/* 
+░█░█░▀█▀░█▀▄░█▀▀░░█▀▀░█░░░█▀▀░█▄█░█▀▀░█▀█░▀█▀
+░█▀█░░█░░█░█░█▀▀░░█▀▀░█░░░█▀▀░█░█░█▀▀░█░█░░█░
+░▀░▀░▀▀▀░▀▀░░▀▀▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░░▀░
+*/
+//Toggle visibility of the cart counter depending on if something is in it
+//default is hidden
+export function showElement(element) {
+    element.classList.add('visible');
+    element.classList.remove('hidden');
+}
+export function hideElement(element) {
+    element.classList.add('hidden');
+    element.classList.remove('visible');
+}
+export function getCartCount() {
+    const cart = getLocalStorage('so-cart');
+    let cartCount = 0;
+    if (cart !== null && cart !== undefined) {
+        cartCount = cart.length;
+    }
+    return cartCount;
+}

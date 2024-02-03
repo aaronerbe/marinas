@@ -14,9 +14,9 @@
 	padding: 1px 6px;
 	position: absolute;
 	-webkit-user-select: none;
-	   -moz-user-select: none;
-	    -ms-user-select: none;
-	        user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	pointer-events: none;
 	white-space: nowrap;
 	z-index: 6;
