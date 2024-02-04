@@ -11,8 +11,8 @@ export async function loadHeaderFooter(){
     console.log(header);
     console.log(footer);
     //grab the template data
-    const headerTemplate = await loadTemplate('../partials/header.html');
-    const footerTemplate = await loadTemplate('../partials/footer.html');
+    const headerTemplate = await loadTemplate('/partials/header.html');
+    const footerTemplate = await loadTemplate('/partials/footer.html');
     //returns a promise so I can do a .then for grabbing the hamburger (or anything I may need later)
     return new Promise((resolve, reject) =>{
         renderWithTemplate(headerTemplate, header);
