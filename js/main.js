@@ -2,6 +2,7 @@ import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCo
 //import windyMap from "./windy.js";
 import { updateMapOptions } from "./windy.mjs";
 import { getMarinaInfoFromSearch } from "./marinas.mjs";
+import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
 
 //had to do it this way to address timing of the header being loaded before I grab the hamburger and make it visible.  
 loadHeaderFooter().then(() => {
@@ -10,17 +11,15 @@ loadHeaderFooter().then(() => {
     showElement(hamburger);
     //TODO add an event listener to the hamburger to open a menu for favorites
     hamburger.addEventListener('click', () => {
-        // Call your function to dynamically populate the menu
         //populateMenu();
+        populateFavoritesMenu();
         //showMenu();
     });
 });
 
-
 const searchButton = document.getElementById('searchButton');
 const searchInput = document.getElementById('searchInput')
 const favButton = document.getElementById('favButton');
-console.log(favButton);
 const mapElement = document.getElementById('windy');
 
 /* 
@@ -38,35 +37,9 @@ searchInput.addEventListener('keydown', async(event) => {
 })
 
 favButton.addEventListener('click', () => {
-    // Get existing favorites from localStorage
-    const existingFavorites = localStorage.getItem('favLocations') || '[]';
-
-    // Parse the existing data into an array
-    let dataArray = JSON.parse(existingFavorites);
-
-    // Add the new location to the array with the key as the array length
-    dataArray.push({ [dataArray.length]: searchInput.value });
-
-    // Update localStorage with the modified array
-    localStorage.setItem("favLocations", JSON.stringify(dataArray));
-
-    console.log('Location added to favorites');
+    saveFavorite(searchInput.value);
 });
 
-
-
-//favButton.addEventListener('click', () => {
-//    // get existing favorites
-//    const existingFavorites = JSON.parse(localStorage.getItem('favLocations')) || [];
-
-//    // add the new location to the array
-//    existingFavorites.push({ 'location': searchInput.value });
-
-//    // save the updated array back to localStorage
-//    localStorage.setItem('favLocations', JSON.stringify(existingFavorites));
-
-//    console.log('Location set');
-//});
 
 async function search(){
     if (mapElement.classList.contains('hidden')) {

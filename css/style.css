@@ -67,6 +67,7 @@ footer{
     font-size: 30px;
     text-align: right;
     width: 100%;
+    position: relative;
 }
 #logo-name-link, #logo-name-link *{
     font-size: 1.5rem;
@@ -146,6 +147,18 @@ footer{
     width: 100%;
     border-left: 1px solid var(--primary-color);
     border-radius: 0;
+}
+#favoritesMenu{
+    color: var(--light-color);
+    background-color: var(--primary-color);
+    padding: 0 2rem;
+    font-size: 1rem;
+    text-align: left;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(0, 50%);
+    z-index: 2;
 }
 #searchButton{
     background-color: var(--highlight-color);
