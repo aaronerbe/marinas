@@ -55,9 +55,9 @@ function renderMap(lat, lon, marinas) {
     topLayer.setOpacity('0');
     map.on('zoomend', function() {
         if (map.getZoom() >= 12) {
-            topLayer.setOpacity('.5');
+            topLayer.setOpacity('0.5');
         } else {
-            topLayer.setOpacity('1');
+            topLayer.setOpacity('0');
         }
     });
     map.setZoom(11);
