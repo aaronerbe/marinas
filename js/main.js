@@ -3,13 +3,31 @@ import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCo
 import { updateMapOptions } from "./windy.mjs";
 import { getMarinaInfoFromSearch } from "./marinas.mjs";
 
-loadHeaderFooter();
+//had to do it this way to address timing of the header being loaded before I grab the hamburger and make it visible.  
+loadHeaderFooter().then(() => {
+    const hamburger = document.getElementById('hamburger');
+    console.log(hamburger);
+    showElement(hamburger);
+    //TODO add an event listener to the hamburger to open a menu for favorites
+    hamburger.addEventListener('click', () => {
+        // Call your function to dynamically populate the menu
+        //populateMenu();
+        //showMenu();
+    });
+});
+
 
 const searchButton = document.getElementById('searchButton');
 const searchInput = document.getElementById('searchInput')
+const favButton = document.getElementById('favButton');
+console.log(favButton);
 const mapElement = document.getElementById('windy');
-//const map = new windyMap();
 
+/* 
+░█▀▀░█▀▀░█▀█░█▀▄░█▀▀░█░█
+░▀▀█░█▀▀░█▀█░█▀▄░█░░░█▀█
+░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀
+*/
 searchButton.addEventListener('click', async () => {
     search(searchInput);
 });
@@ -19,9 +37,38 @@ searchInput.addEventListener('keydown', async(event) => {
     }
 })
 
-async function search(){
-    //const searchInput = document.getElementById('searchInput').value;
+favButton.addEventListener('click', () => {
+    // Get existing favorites from localStorage
+    const existingFavorites = localStorage.getItem('favLocations') || '[]';
 
+    // Parse the existing data into an array
+    let dataArray = JSON.parse(existingFavorites);
+
+    // Add the new location to the array with the key as the array length
+    dataArray.push({ [dataArray.length]: searchInput.value });
+
+    // Update localStorage with the modified array
+    localStorage.setItem("favLocations", JSON.stringify(dataArray));
+
+    console.log('Location added to favorites');
+});
+
+
+
+//favButton.addEventListener('click', () => {
+//    // get existing favorites
+//    const existingFavorites = JSON.parse(localStorage.getItem('favLocations')) || [];
+
+//    // add the new location to the array
+//    existingFavorites.push({ 'location': searchInput.value });
+
+//    // save the updated array back to localStorage
+//    localStorage.setItem('favLocations', JSON.stringify(existingFavorites));
+
+//    console.log('Location set');
+//});
+
+async function search(){
     if (mapElement.classList.contains('hidden')) {
         showElement(mapElement);
     }
@@ -44,8 +91,3 @@ async function search(){
         console.error('An error occurred:', error);
     }
 }
-
-//const lat = '39.259790916124274';
-//const lon = '-76.6135644707624';
-////const url = buildBaseURL(lat, lon)
-//    console.log(`list = `, marinas);

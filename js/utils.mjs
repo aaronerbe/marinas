@@ -13,8 +13,13 @@ export async function loadHeaderFooter(){
     //grab the template data
     const headerTemplate = await loadTemplate('../partials/header.html');
     const footerTemplate = await loadTemplate('../partials/footer.html');
-    renderWithTemplate(headerTemplate, header);
-    renderWithTemplate(footerTemplate, footer);
+    //returns a promise so I can do a .then for grabbing the hamburger (or anything I may need later)
+    return new Promise((resolve, reject) =>{
+        renderWithTemplate(headerTemplate, header);
+        renderWithTemplate(footerTemplate, footer);
+        resolve();
+    })
+    
 }
 /*
 ░█▀▀░█▀▀░▀█▀░█▀▀░█░█░░░▀█▀░█▀▀░█▄█░█▀█░█░░░█▀█░▀█▀░█▀▀
@@ -69,14 +74,6 @@ export function showElement(element) {
 export function hideElement(element) {
     element.classList.add('hidden');
     element.classList.remove('visible');
-}
-export function getCartCount() {
-    const cart = getLocalStorage('so-cart');
-    let cartCount = 0;
-    if (cart !== null && cart !== undefined) {
-        cartCount = cart.length;
-    }
-    return cartCount;
 }
 
 /* 

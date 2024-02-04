@@ -8,8 +8,9 @@ export function updateMapOptions(myLat, myLon, marinas){
         key: 'qrQODxrOJqHA9Xn70LbOLmFhIVEEWg4h',
         lat: myLat,
         lon: myLon,
-        zoom: 30,
+        zoom: 11,
     };
+
     console.log('updated coords')
     //updateMap(options)
     if (windyAPI) {
@@ -41,6 +42,26 @@ function renderMap(lat, lon, marinas) {
     const searchMarker = L.marker([lat, lon]).addTo(markerCluster);
     searchMarker.bindPopup('<b>Your Marker</b>').openPopup();
 
+    // MAP HACK try to fix zoom:
+    //This opens up the zoom level and pulls in the openstreetmap to overlay so you can still see things.  Windy will go blank if zoomed beyond 11.  
+    map.options.minZoom = 4;
+    map.options.maxZoom = 17;
+
+    var topLayer = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, ',
+        minZoom: 12,
+        maxZoom: 17
+    }).addTo(map)
+    topLayer.setOpacity('0');
+    map.on('zoomend', function() {
+        if (map.getZoom() >= 12) {
+            topLayer.setOpacity('.5');
+        } else {
+            topLayer.setOpacity('1');
+        }
+    });
+    map.setZoom(11);
+
     // Place markers for each marina location
     Object.values(marinas.data).forEach(marina => {
         const { id, name, location, kind } = marina;
@@ -70,6 +91,8 @@ function renderMap(lat, lon, marinas) {
 
     // Add the marker cluster group to the map
     map.addLayer(markerCluster);
+    //Adds the openstreetmap layer (hack to fix zoom limitation)
+    map.addLayer(topLayer);
 
     // Center the map on the search location
     map.setView([lat, lon], map.getZoom());

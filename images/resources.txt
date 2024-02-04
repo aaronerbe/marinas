@@ -1,4 +1,6 @@
-search icon:  https://www.iconfinder.com/search?q=search&price=free
+search icon:  https://www.iconfinder.com/icons/172546/search_icon
 marina hero page:  https://pixabay.com/photos/port-boats-sunset-golden-hour-6496782/
 anchor icon:  https://www.iconfinder.com/icons/8684349/dock_sailing_maps_location_placeholder_pin_icon
-email icon: https://www.iconfinder.com/search?q=email&price=free
+email icon: https://www.iconfinder.com/icons/211737/email_icon
+hamburger:  https://www.iconfinder.com/icons/1814109/hamburger_menu_icon
+bookmark: https://www.iconfinder.com/icons/3994430/bookmark_label_ribbon_save_web_icon

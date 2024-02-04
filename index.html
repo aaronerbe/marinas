@@ -7,18 +7,19 @@
     <link rel="stylesheet" href="/css/style.css" />
     <!--<link rel="stylesheet" href="/css/leaflet-label.css">-->
     
-    <script type="module" src="/js/windy.mjs"></script>
+    <!-- load my JS -->
     <script src="/js/main.js" type="module"></script>
+    <script type="module" src="/js/windy.mjs"></script>
     
-        <!-- Add Windy API library -->
-        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-        <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
+    <!-- Add Windy API library -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
 
-        <!-- Leaflet.markercluster CSS and JS -->
-        <!-- NEEDED to cluster markers together and organize.  Windy won't zoom in enough to make sense of them otherwise -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
-        <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <!-- Leaflet.markercluster CSS and JS -->
+    <!-- NEEDED to cluster markers together and organize.  Windy won't zoom in enough to make sense of them otherwise -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     
         
     <link rel="icon" href="favicon.ico">
@@ -45,6 +46,7 @@
                 </div>
                 <input type="text" id="searchInput" placeholder="City, State, Country OR lat, long">
                 <button id="searchButton"><img src="images/icons/search.svg" alt="search button" width="25"></button>
+                <button id="favButton"><img src="images/icons/bookmark.svg" alt="save favorites button" width="25"></button>
             </div>
         </div>
         <div id="windy" class="hidden"></div>
