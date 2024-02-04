@@ -1,8 +1,8 @@
-import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry} from "./utils.mjs";
+import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry} from "/js/utils.mjs";
 //import windyMap from "./windy.js";
-import { updateMapOptions } from "./windy.mjs";
-import { getMarinaInfoFromSearch } from "./marinas.mjs";
-import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
+import { updateMapOptions } from "/js/windy.mjs";
+import { getMarinaInfoFromSearch } from "/js/marinas.mjs";
+import { populateFavoritesMenu, saveFavorite } from "/js/favorites.mjs";
 
 //had to do it this way to address timing of the header being loaded before I grab the hamburger and make it visible.  
 loadHeaderFooter().then(() => {
