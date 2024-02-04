@@ -8,8 +8,8 @@
     <!--<link rel="stylesheet" href="/css/leaflet-label.css">-->
     
     <!-- load my JS -->
-    <script src="js/main.js" type="module"></script>
-    <script type="module" src="js/windy.mjs"></script>
+    <script src="/js/main.js" type="module"></script>
+    <script type="module" src="/js/windy.mjs"></script>
     
     <!-- Add Windy API library -->
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
@@ -22,15 +22,15 @@
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     
         
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <header class="divider" id="main-header"></header>    
     <main>
         <div id="hero">
             <picture>
-                <source media="(max-width: 600px)" srcset="images/banner-sm.jpg" />
-                <img src="images/banner.jpg" alt="image of sailboats at dock at sunset" />
+                <source media="(max-width: 600px)" srcset="/images/banner-sm.jpg" />
+                <img src="/images/banner.jpg" alt="image of sailboats at dock at sunset" />
             </picture>
             <div id="search-container">
                 <div id="search-favorites-dropdown">
@@ -45,8 +45,8 @@
                     </select>
                 </div>
                 <input type="text" id="searchInput" placeholder="City, State, Country OR lat, long">
-                <button id="searchButton"><img src="images/icons/search.svg" alt="search button" width="25"></button>
-                <button id="favButton"><img src="images/icons/bookmark.svg" alt="save favorites button" width="25"></button>
+                <button id="searchButton"><img src="/images/icons/search.svg" alt="search button" width="25"></button>
+                <button id="favButton"><img src="/images/icons/bookmark.svg" alt="save favorites button" width="25"></button>
             </div>
         </div>
         <div id="windy" class="hidden"></div>
