@@ -33,19 +33,20 @@
                 <img src="./images/banner.jpg" alt="image of sailboats at dock at sunset" />
             </picture>
             <div id="search-container">
-                <div id="search-favorites-dropdown">
+                <!--<div id="search-favorites-dropdown">
                     <select>
                         <option value="" disabled selected>Favorites</option>
-                        <!-- in mobile, place here.  In desktop, place in hamburger menu -->
-    
-                        <!--<option value="location1">Saved Location 1</option>
-                        <option value="location2">Saved Location 2</option>
-                        <option value="location3">Saved Location 3</option>-->
-                        <!-- Dynamically populated from JS later prob using a template-->
                     </select>
-                </div>
+                </div>-->
+                
+                <button id="bookmarkButton">
+                    <img id="bookmark" src="./images/icons/bookmark.svg" width="25px" alt="hamburger menu" class="visible">
+                </button>
+                <div id="favoritesMenu" class="hidden"></div>
+
                 <input type="text" id="searchInput" placeholder="City, State, Country OR lat, long">
                 <button id="searchButton"><img src="./images/icons/search.svg" alt="search button" width="25"></button>
+
                 <button id="favButton"><img src="./images/icons/bookmark.svg" alt="save favorites button" width="25"></button>
             </div>
         </div>

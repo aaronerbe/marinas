@@ -6,13 +6,14 @@ import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
 
 //had to do it this way to address timing of the header being loaded before I grab the hamburger and make it visible.  
 loadHeaderFooter().then(() => {
-    const hamburger = document.getElementById('hamburger');
-    console.log(hamburger);
-    showElement(hamburger);
+    const bookmarksElement = document.getElementById('bookmark');
+    console.log(bookmarksElement);
+    showElement(bookmarksElement);
     //TODO add an event listener to the hamburger to open a menu for favorites
-    hamburger.addEventListener('click', () => {
+    bookmarksElement.addEventListener('click', () => {
         //populateMenu();
-        populateFavoritesMenu();
+        console.log('clicked')
+        populateFavoritesMenu('favoritesMenu', 'favLocations');
         //showMenu();
     });
 });

@@ -3,6 +3,8 @@
 //todo need to find a spot to save favorites
 //todo change the current favorites drop down on the search to give a filter list for the types of marinas
 
+import { hideElement, showElement } from "./utils.mjs";
+
 
 export function saveFavorite(searchInputValue) {
     // Get existing favorites from localStorage
@@ -22,35 +24,35 @@ export function saveFavorite(searchInputValue) {
     }
 }
 
-export function populateFavoritesMenu() {
+export function populateFavoritesMenu(elementContainer, key) {
     // Get existing favorites from localStorage
-    const existingFavorites = localStorage.getItem('favLocations') || '[]';
-
+    const existingFavorites = localStorage.getItem(key) || '[]';
     // Parse the existing data into an array
     const dataArray = JSON.parse(existingFavorites);
     // Get the menu container
-    const menuContainer = document.getElementById('favoritesMenu');
+    const menuContainer = document.getElementById(elementContainer);
     // Clear the existing content of the menu container
     menuContainer.innerHTML = '';
+    console.table(dataArray);
 
     // Iterate through the array and create clickable menu items
     dataArray.forEach(item => {
         const index = Object.keys(item)[0];
         const location = Object.values(item)[0];
-
         // Create a menu item
         const menuItem = document.createElement('div');
         menuItem.textContent = location;
         menuItem.classList.add('favorite-item');
-
         // Add a click event listener to handle the click on the menu item
         menuItem.addEventListener('click', () => {
             // Do something when a favorite is clicked, e.g., navigate to the location
             console.log(`Clicked on favorite location: ${location}`);
+            hideElement(menuContainer)
         });
 
         // Append the menu item to the menu container
         menuContainer.appendChild(menuItem);
+        showElement(menuContainer)
     });
 }
 
