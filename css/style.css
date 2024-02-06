@@ -55,15 +55,7 @@ header {
     padding: 1.5rem 20px;
     background-color: var(--primary-color);
 }
-footer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 20px;
-    /*margin: 3rem 0;*/
-    background-color: var(--primary-color);
-    color: var(--light-color);
-}
+
 .logo {
     overflow: hidden;
     display: flex;
@@ -247,6 +239,23 @@ button:active {
 }*/
 
 
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 20px;
+    /*margin: 3rem 0;*/
+    background-color: var(--primary-color);
+    color: var(--light-color);
+}
+#footer-contact-container:hover{
+    transition: .15s linear;
+    transform: scale(1.1);
+}
+#footer-contact-container:active{
+    transition: .1s linear;
+    transform: scale(.95);
+}
 
 
 
