@@ -23,6 +23,9 @@ body {
     background-color: var(--light-color);
     color: var(--primary-color);
 }
+main{
+    position: relative;
+}
 .highlight {
     color: var(--highlight-color);
 }
@@ -118,7 +121,6 @@ footer{
 }
 #search-container{
     display: flex;
-    /*justify-content: space-between;*/
     border: 1.5px solid var(--primary-color);
     border-radius: 5px;
     margin: 0 auto;
@@ -129,12 +131,12 @@ footer{
     /* mobile specific css */
     width: 95%;
     transform: translate(2.5%, 50%);
+    height: 2rem;
 }
 #search-container:hover{
     border: 1.5px solid var(--highlight-color);
 }
-#search-container>*, #search-favorites-dropdown>*{
-    height: 2rem;
+#search-container>*{
     border: 0 none;
     background-color: var(--light-color);
     border-radius: 3px;
@@ -148,17 +150,36 @@ footer{
     border-left: 1px solid var(--primary-color);
     border-radius: 0;
 }
+#bookmarkButton{
+    background-color: var(--highlight-color);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    min-width: 2rem;
+    border-right: 1px solid var(--primary-color)
+}
 #favoritesMenu{
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    justify-content: center;
+    padding: .5rem;
     color: var(--light-color);
     background-color: var(--primary-color);
-    padding: 0 2rem;
+    width: 100%;
     font-size: 1rem;
-    text-align: left;
     position: absolute;
-    right: 0;
-    top: 0;
-    transform: translate(0, 50%);
-    z-index: 2;
+    transform: translate(0, 2rem);
+    overflow-y: auto;
+    z-index: 100;
+}
+.favorite-location{
+    margin: 0rem;
+    padding: .2rem 1rem;
+    cursor: pointer;
+}
+.favorite-location:hover{
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
 }
 #searchButton{
     background-color: var(--highlight-color);
@@ -166,19 +187,13 @@ footer{
     min-width: 2rem;
     border-right: 1px solid var(--primary-color);
 }
-#favButton{
+#saveFavButton{
     background-color: var(--highlight-color);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     min-width: 2rem;
-    border-left: 1px solid var(--primary-color)
-}
-#bookmarkButton{
-    background-color: var(--highlight-color);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    min-width: 2rem;
-    border-right: 1px solid var(--primary-color)
+    /*border: 0;*/
+    border-left: 2px solid var(--primary-color);
 }
 button:hover{
     transform: scale(1.11);
@@ -190,6 +205,15 @@ button:active {
     border: 2px solid var(--highlight-color);
     box-shadow: 0 0 0px var(--highlight-color);
     
+}
+#popup-message{
+    position: absolute;
+    padding: .25rem 1rem;
+    background-color: var(--light-color);
+    border: 1px solid var(--highlight-color);
+    z-index: 2;
+    font-size: 1rem;
+    top: calc(100% + 1rem)
 }
 
 

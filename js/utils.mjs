@@ -50,14 +50,55 @@ export function renderWithTemplate(templateFn, parentElement, position = "afterb
 ░█░░░█░░░█▀▀░█▀█░█░█░░▄█▄░░█░░░█▀█░█▀▀░░█░░░█░░█▀█░█░░░░█░░▄▀░░█▀▀
 ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░░░▀░░░▀▀▀░▀░▀░▀░░░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
 */
-//remove dashes and capitalize a word used for category in a couple places
-export function capitalizeWord(word) {
-    if (word !== null) {
-    word = word.replace(/-/g, ' ');
-    const words = word.split(' ');
-    const capitalizedWords = words.map(w => w.charAt(0).toUpperCase() + w.slice(1));
-    return capitalizedWords.join(' ');}
+export function capitalizeLocation(locationString) {
+    if (locationString !== null) {
+        // Replace hyphens with spaces
+        locationString = locationString.replace(/-/g, ' ');
+
+        // Split the string into words
+        const words = locationString.split(' ');
+
+        // Map over each word and capitalize it
+        const capitalizedWords = words.map(w => {
+            // Check if the word is an abbreviated state
+            const isStateAbbreviation = /^[a-zA-Z]{2}$/.test(w);
+            
+            // Capitalize each word, including state abbreviations
+            return isStateAbbreviation ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+        });
+
+        // Join the capitalized words back into a string
+        return capitalizedWords.join(' ');
+    }
 }
+/*
+░█▀▄░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░▀█▀░█▀█░█▀█░█░░░▀█▀░▀█▀░█▀█
+░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄░░░░█░░█░█░█░█░█░░░░█░░░█░░█▀▀
+░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░░▀░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░░
+*/
+export function renderMessage(message, targetElement) {
+    hideMessage()
+    const msg = document.createElement('div');
+    const element = document.getElementById(targetElement);
+    msg.id = 'popup-message';
+    msg.innerHTML = message;
+    
+    // Add class to position the message below the target element
+    //msg.classList.add('below');
+    
+    // Insert the new element just below the target element
+    //targetElement.parentNode.insertBefore(msg, targetElement.nextSibling);
+    //targetElement.insertAdjacentElement('afterend', msg);
+    element.appendChild(msg)
+
+}
+export function hideMessage() {
+    const msg = document.getElementById('popup-message');
+    if (msg) {
+        msg.remove();
+    }
+}
+
 
 
 /* 
@@ -123,4 +164,12 @@ export function splitCityStateCountry(inputString) {
     const country = parts.length > 2 ? parts[2] : null;
 
     return { city, state, country };
+}
+
+export function loadSearch(location){
+    const searchInputElement = document.getElementById('searchInput')
+    let enterEvent = new KeyboardEvent('keydown', {key: 'Enter'});
+    searchInputElement.innerHTML = '';
+    searchInputElement.value = location;
+    searchInputElement.dispatchEvent(enterEvent);
 }

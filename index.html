@@ -32,22 +32,23 @@
                 <source media="(max-width: 600px)" srcset="./images/banner-sm.jpg" />
                 <img src="./images/banner.jpg" alt="image of sailboats at dock at sunset" />
             </picture>
-            <div id="search-container">
-                <!--<div id="search-favorites-dropdown">
-                    <select>
-                        <option value="" disabled selected>Favorites</option>
-                    </select>
-                </div>-->
-                
+
+            <div id="search-container">                
                 <button id="bookmarkButton">
-                    <img id="bookmark" src="./images/icons/bookmark.svg" width="25px" alt="hamburger menu" class="visible">
+                    <img src="./images/icons/bookmark.svg" width="25px" alt="hamburger menu" class="visible">
                 </button>
+
                 <div id="favoritesMenu" class="hidden"></div>
 
                 <input type="text" id="searchInput" placeholder="City, State, Country OR lat, long">
-                <button id="searchButton"><img src="./images/icons/search.svg" alt="search button" width="25"></button>
 
-                <button id="favButton"><img src="./images/icons/bookmark.svg" alt="save favorites button" width="25"></button>
+                <button id="searchButton">
+                    <img src="./images/icons/search.svg" alt="search button" width="25">
+                </button>
+
+                <button id="saveFavButton">
+                    <img src="./images/icons/favorite.svg" alt="save favorites button" width="30">
+                </button>
             </div>
         </div>
         <div id="windy" class="hidden"></div>

@@ -1,28 +1,56 @@
-import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry} from "./utils.mjs";
+import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry, hideElement, renderMessage, hideMessage} from "./utils.mjs";
 //import windyMap from "./windy.js";
 import { updateMapOptions } from "./windy.mjs";
 import { getMarinaInfoFromSearch } from "./marinas.mjs";
 import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
 
-//had to do it this way to address timing of the header being loaded before I grab the hamburger and make it visible.  
-loadHeaderFooter().then(() => {
-    const bookmarksElement = document.getElementById('bookmark');
-    console.log(bookmarksElement);
-    showElement(bookmarksElement);
-    //TODO add an event listener to the hamburger to open a menu for favorites
-    bookmarksElement.addEventListener('click', () => {
-        //populateMenu();
-        console.log('clicked')
-        populateFavoritesMenu('favoritesMenu', 'favLocations');
-        //showMenu();
-    });
-});
-
+const mapElement = document.getElementById('windy');
 const searchButton = document.getElementById('searchButton');
 const searchInput = document.getElementById('searchInput')
-const favButton = document.getElementById('favButton');
-const mapElement = document.getElementById('windy');
+const saveFavElement = document.getElementById('saveFavButton');
+const bookmarksElement = document.getElementById('bookmarkButton');
 
+/* 
+░█░░░█▀█░█▀█░█▀▄░░░█░█░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█░█▀▀░█▀█░█▀█░▀█▀░█▀▀░█▀▄
+░█░░░█░█░█▀█░█░█░░░█▀█░█▀▀░█▀█░█░█░█▀▀░█▀▄░▄▀░░█▀▀░█░█░█░█░░█░░█▀▀░█▀▄
+░▀▀▀░▀▀▀░▀░▀░▀▀░░░░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀░░░▀░░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀
+*/
+loadHeaderFooter()
+
+/* 
+░█▀█░█▀█░█▀▀░█▀█░░░█▀▄░█▀█░█▀█░█░█░█▄█░█▀█░█▀▄░█░█
+░█░█░█▀▀░█▀▀░█░█░░░█▀▄░█░█░█░█░█▀▄░█░█░█▀█░█▀▄░█▀▄
+░▀▀▀░▀░░░▀▀▀░▀░▀░░░▀▀░░▀▀▀░▀▀▀░▀░▀░▀░▀░▀░▀░▀░▀░▀░▀
+*/
+bookmarksElement.addEventListener('click', () => {
+    populateFavoritesMenu('favoritesMenu', 'favLocations');
+});
+//generate & hide popup message
+bookmarksElement.addEventListener('mouseenter', () => {
+    const menuClass = document.getElementById('favoritesMenu').classList
+    if (menuClass == 'hidden'){
+        renderMessage("Open A Saved Location", 'search-container')
+    }
+});
+bookmarksElement.addEventListener('mouseleave', () => {
+    hideMessage();
+});
+
+/* 
+░█▀▀░█▀█░█░█░█▀▀░░░█▀▀░█▀█░█░█░█▀█░█▀▄░▀█▀░▀█▀░█▀▀
+░▀▀█░█▀█░▀▄▀░█▀▀░░░█▀▀░█▀█░▀▄▀░█░█░█▀▄░░█░░░█░░█▀▀
+░▀▀▀░▀░▀░░▀░░▀▀▀░░░▀░░░▀░▀░░▀░░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀
+*/
+saveFavElement.addEventListener('click', () => {
+    saveFavorite(searchInput.value);
+});
+//generate & hide popup message
+saveFavElement.addEventListener('mouseenter', () => {
+    renderMessage("Save Location to Favorites", 'search-container')
+});
+saveFavElement.addEventListener('mouseleave', () => {
+    hideMessage();
+});
 /* 
 ░█▀▀░█▀▀░█▀█░█▀▄░█▀▀░█░█
 ░▀▀█░█▀▀░█▀█░█▀▄░█░░░█▀█
@@ -36,19 +64,11 @@ searchInput.addEventListener('keydown', async(event) => {
         search(searchInput)
     }
 })
-
-favButton.addEventListener('click', () => {
-    saveFavorite(searchInput.value);
-});
-
-
 async function search(){
     if (mapElement.classList.contains('hidden')) {
         showElement(mapElement);
     }
-
     console.log(searchInput.value);
-
     try {
         // break it up into 3 vars to pass into the conversion function
         let { city, state, country } = splitCityStateCountry(searchInput.value);
