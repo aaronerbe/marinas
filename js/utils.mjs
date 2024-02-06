@@ -99,20 +99,20 @@ export function hideMessage() {
     }
 }
 
-
-
 /* 
 ░█░█░▀█▀░█▀▄░█▀▀░░█▀▀░█░░░█▀▀░█▄█░█▀▀░█▀█░▀█▀
 ░█▀█░░█░░█░█░█▀▀░░█▀▀░█░░░█▀▀░█░█░█▀▀░█░█░░█░
 ░▀░▀░▀▀▀░▀▀░░▀▀▀░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░░▀░
 */
-//Toggle visibility of the cart counter depending on if something is in it
-//default is hidden
 export function showElement(element) {
+    //Toggle visibility of any element using visible/hidden classes
+    //default is hidden
     element.classList.add('visible');
     element.classList.remove('hidden');
 }
 export function hideElement(element) {
+    //Toggle visibility of any element using visible/hidden classes
+    //default is hidden
     element.classList.add('hidden');
     element.classList.remove('visible');
 }
@@ -123,6 +123,7 @@ export function hideElement(element) {
 ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░░░░░▀░░▀▀▀░░░▀▀▀░▀▀▀░░▀░░░▀░░▀░░░▀▀▀░░▀░
 */
 export async function convertCoordToLocation(city, state, country) {
+    //convert location search into usable coordinates
     try {
         const geocodingApiKey = '8f14ece6e8f5486286773645b8098166';
         const geocodingEndpoint = 'https://api.opencagedata.com/geocode/v1/json';
@@ -149,13 +150,13 @@ export async function convertCoordToLocation(city, state, country) {
     }
 }
 
-
 /* 
 ░█▀▀░█▀█░█░░░▀█▀░▀█▀░░░█▀▀░▀█▀░▀█▀░█░█░░░█░█▀▀░▀█▀░█▀█░▀█▀░█▀▀
 ░▀▀█░█▀▀░█░░░░█░░░█░░░░█░░░░█░░░█░░░█░░▄▀░░▀▀█░░█░░█▀█░░█░░█▀▀
 ░▀▀▀░▀░░░▀▀▀░▀▀▀░░▀░░░░▀▀▀░▀▀▀░░▀░░░▀░░▀░░░▀▀▀░░▀░░▀░▀░░▀░░▀▀▀
 */
 export function splitCityStateCountry(inputString) {
+    //split up a location search into city, state, country parts
     const cleanedInput = inputString.toLowerCase().trim();
     const parts = cleanedInput.split(',').map(part => part.trim());
 
@@ -166,10 +167,28 @@ export function splitCityStateCountry(inputString) {
     return { city, state, country };
 }
 
+/*
+░█░░░█▀█░█▀█░█▀▄░░░█▀▀░█▀▀░█▀█░█▀▄░█▀▀░█░█
+░█░░░█░█░█▀█░█░█░░░▀▀█░█▀▀░█▀█░█▀▄░█░░░█▀█
+░▀▀▀░▀▀▀░▀░▀░▀▀░░░░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀
+*/
 export function loadSearch(location){
+    //programatically load in a loccation from bookmarks and hit enter
     const searchInputElement = document.getElementById('searchInput')
     let enterEvent = new KeyboardEvent('keydown', {key: 'Enter'});
     searchInputElement.innerHTML = '';
     searchInputElement.value = location;
     searchInputElement.dispatchEvent(enterEvent);
+}
+
+/*
+░█▀▀░█░░░▀█▀░█▀▄░█▀▀░░░▄▀░░░░█▀▀░█░█░█▀▄░▀█▀░█▀█░█░█
+░▀▀█░█░░░░█░░█░█░█▀▀░░░▄█▀░░░▀▀█░█▀█░█▀▄░░█░░█░█░█▀▄
+░▀▀▀░▀▀▀░▀▀▀░▀▀░░▀▀▀░░░░▀▀░░░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀░▀
+*/
+export function slideAndShrink(){
+    const imgContainer = document.getElementById('img-container');
+    const searchContainer = document.getElementById('search-container');
+    imgContainer.classList.add('shrink');
+    searchContainer.classList.add('slide-up');
 }

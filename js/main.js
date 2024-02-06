@@ -1,4 +1,4 @@
-import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry, hideElement, renderMessage, hideMessage} from "./utils.mjs";
+import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink} from "./utils.mjs";
 //import windyMap from "./windy.js";
 import { updateMapOptions } from "./windy.mjs";
 import { getMarinaInfoFromSearch } from "./marinas.mjs";
@@ -77,31 +77,19 @@ searchInput.addEventListener('keydown', async(event) => {
     }
 })
 async function search(){
-    const imgContainer = document.getElementById('img-container');
-    const searchContainer = document.getElementById('search-container');
     if (searchInput.value != ""){
         if (mapElement.classList.contains('hidden')) {
             showElement(mapElement);
-            //imgContainer.setAttribute('id','shrink');
-            imgContainer.classList.add('shrink');
-            searchContainer.classList.add('slide-up');
+            slideAndShrink();
         }
-        console.log(searchInput.value);
-        try {
-            // break it up into 3 vars to pass into the conversion function
-            let { city, state, country } = splitCityStateCountry(searchInput.value);
-            console.log(city, state, country);
-            // convert to coords
-            const coords = await convertCoordToLocation(city, state, country);
-            const lat = coords.lat;
-            const lon = coords.lng;
-            const marinas = await getMarinaInfoFromSearch(lat, lon)
-            console.log(marinas);
-            updateMapOptions(lat, lon, marinas);
-    
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
+        // break it up into 3 parts to pass into the conversion function
+        let { city, state, country } = splitCityStateCountry(searchInput.value);
+        // convert to coords
+        const coords = await convertCoordToLocation(city, state, country);
+        const lat = coords.lat;
+        const lon = coords.lng;
+        const marinas = await getMarinaInfoFromSearch(lat, lon)
+        updateMapOptions(lat, lon, marinas);
     }
 
 }
