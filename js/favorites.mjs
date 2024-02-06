@@ -39,6 +39,7 @@ export function populateFavoritesMenu(elementContainer, key) {
     const dataArray = JSON.parse(existingFavorites);
     const menuContainer = document.getElementById(elementContainer);
     const map = document.getElementById('windy');
+    const bookmarksElement = document.getElementById('bookmarkButton');
 
     //see if it's alrady shown, if so, toggle it hidden
     if(menuContainer.classList.contains('visible')){
@@ -54,6 +55,14 @@ export function populateFavoritesMenu(elementContainer, key) {
             menuContainer.appendChild(msg);
         }
         else{
+            //create an event listener to click anywhere on doc and close the menu.  
+            //have to include the bookmarksElement so you can actually click on the bookmark to open the menu..
+            document.addEventListener('click', function(event){
+                if(!menuContainer.contains(event.target) && !bookmarksElement.contains(event.target)){
+                    hideElement(menuContainer)
+                    document.removeEventListener('click', arguments.callee);
+                }
+            });
             // Iterate through the array and create clickable menu items
             //todo  need to add favorite marinas here.  will also need to add another event below for when marinas are clicked on (which would have different eventlistener function - something like openMarina(location)
             dataArray.forEach(item => {

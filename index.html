@@ -27,11 +27,13 @@
 <body>
     <header class="divider" id="main-header"></header>    
     <main>
-        <div id="hero">
-            <picture>
-                <source media="(max-width: 600px)" srcset="./images/banner-sm.jpg" />
-                <img src="./images/banner.jpg" alt="image of sailboats at dock at sunset" />
-            </picture>
+        <div id="hero" class="hero">
+            <div id="img-container" class="img-container">
+                <picture>
+                    <source media="(max-width: 600px)" srcset="./images/banner-sm.jpg" />
+                    <img id="hero-img" src="./images/banner.jpg" alt="image of sailboats at dock at sunset" />
+                </picture>
+            </div>
 
             <div id="search-container">                
                 <button id="bookmarkButton">
@@ -51,7 +53,7 @@
                 </button>
             </div>
         </div>
-        <div id="windy" class="hidden"></div>
+        <div id="windy" class="hidden divider"></div>
     </main>
 
     <footer id="main-footer"></footer>
