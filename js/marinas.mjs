@@ -13,15 +13,15 @@ export default class Marina {
     }
 
     async init() {
-        const data = await this.getMarinaInfo();
+        const data = await this.fetchMarinaData();
     }
-
-    /* 
+    
+    /*
     ░█▀▀░█▀▀░▀█▀░█▀▀░█░█░░░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░▀█▀░█▀█░█▀▀░█▀█
     ░█▀▀░█▀▀░░█░░█░░░█▀█░░░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░░█░░█░█░█▀▀░█░█
     ░▀░░░▀▀▀░░▀░░▀▀▀░▀░▀░░░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀░▀░░░▀▀▀░▀░▀░▀░░░▀▀▀
     */
-    async getMarinaInfo() {
+    async fetchMarinaData() {
         let url = "";
         if (this.type == "ID"){
             url = this.buildBaseURL(this.marinaID);
@@ -93,45 +93,3 @@ function marinaDetailsTemplate(marina) {
         </div>
         </section>`;
 }
-/* 
-        <a id='marina-website' href="${marina.web_url}">website</a>
-*/
-
-/* 
-        <h2 class="divider">${marina.NameWithoutBrand}</h2>
-        <img
-            class="divider"
-            src="${marina.Images.PrimaryLarge}"
-            alt="${marina.NameWithoutBrand}"
-        />
-        <p class="marina-card__price">$${marina.FinalPrice}</p>
-        <p class="marina__color">${marina.Colors[0].ColorName}</p>
-        <p class="marina__description">
-        ${marina.DescriptionHtmlSimple}
-        </p>
-        <div class="marina-detail__add">
-            <button id="addToCart" data-id="${marina.Id}">Add to Cart</button>
-*/
-
-
-//https://marinas.com/developers/api_documentation
-/*fetch('https://api.marinas.com/v1/points/4qcq', {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        // Add any other headers if needed
-    },
-})
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-
-async function test(){
-    const response = await fetch(url, options);
-    const result = await response.text();
-    console.table(result);
-}*/
-//const lat = '39.259790916124274';
-//const lon = '-76.6135644707624';
-//const url = buildBaseURL(lat, lon)
-//await getMarinaInfo(url)
