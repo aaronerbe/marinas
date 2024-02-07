@@ -59,14 +59,15 @@ export function populateFavoritesMenu(elementContainer, key) {
             menuContainer.appendChild(msg);
         }
         else{
-            //create an event listener to click anywhere on doc and close the menu.  
-            //have to include the bookmarksElement so you can actually click on the bookmark to open the menu..
-            document.addEventListener('click', function(event){
-                if(!menuContainer.contains(event.target) && !bookmarksElement.contains(event.target)){
-                    hideElement(menuContainer)
-                    document.removeEventListener('click', arguments.callee);
+            // Create an event listener to click anywhere on doc and close the menu.
+            // Have to include the bookmarksElement so you can actually click on the bookmark to open the menu.
+            function clickOutsideMenu(event) {
+                if (!menuContainer.contains(event.target) && !bookmarksElement.contains(event.target)) {
+                    hideElement(menuContainer);
+                    document.removeEventListener('click', clickOutsideMenu);
                 }
-            });
+            }
+            document.addEventListener('click', clickOutsideMenu);
             // Iterate through the array and create clickable menu items
             //todo  need to add favorite marinas here.  will also need to add another event below for when marinas are clicked on (which would have different eventlistener function - something like openMarina(location)
             dataArray.forEach(item => {

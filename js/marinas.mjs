@@ -15,10 +15,20 @@ export default class Marina {
     async init() {
         const data = await this.getMarinaInfo();
     }
-
+    /* 
+    ░█▀▄░█▀▀░▀█▀░█░█░█▀▄░█▀█░░░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀█░█▀▄░█▀▄░█▀█░█░█
+    ░█▀▄░█▀▀░░█░░█░█░█▀▄░█░█░░░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█▀█░█▀▄░█▀▄░█▀█░░█░
+    ░▀░▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀░▀░░░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀░▀░░░▀░▀░▀░▀░▀░▀░▀░▀░░▀░
+    */
     getMarinaArray(){
         return this.data;
     }
+
+    /* 
+    ░█▀▀░█▀▀░▀█▀░█▀▀░█░█░░░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░▀█▀░█▀█░█▀▀░█▀█
+    ░█▀▀░█▀▀░░█░░█░░░█▀█░░░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░░█░░█░█░█▀▀░█░█
+    ░▀░░░▀▀▀░░▀░░▀▀▀░▀░▀░░░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀░▀░░░▀▀▀░▀░▀░▀░░░▀▀▀
+    */
     async getMarinaInfo() {
         let url = "";
         if (this.type == "ID"){
@@ -52,37 +62,64 @@ export default class Marina {
         }
     }
     
+    /* 
+    ░█▀▄░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█▀▄░█▀▀░▀█▀░█▀█░▀█▀░█░░░█▀▀
+    ░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄░░░█░█░█▀▀░░█░░█▀█░░█░░█░░░▀▀█
+    ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░▀▀░░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀
+    */
     renderMarinaDetails(selector){
         //method to generate HTML to display our product
-        const element = document.querySelector(selector);
+        const element = document.getElementById(selector);
         element.insertAdjacentHTML(
             "afterBegin",
-            marinaDetailsTemplate(this.marina)
+            marinaDetailsTemplate(this.data)
         )
     } 
+    //todo bruild ratings
+    //function buildMarinaRatings{}
+    //todo build images
+    //todo build address to place below map
 }
 
+/*
+░▀█▀░█▀▀░█▄█░█▀█░█░░░█▀█░▀█▀░█▀▀
+░░█░░█▀▀░█░█░█▀▀░█░░░█▀█░░█░░█▀▀
+░░▀░░▀▀▀░▀░▀░▀░░░▀▀▀░▀░▀░░▀░░▀▀▀
+*/
+function marinaDetailsTemplate(marina) {
+    return `
+    <section class="marina-detail"> 
+        <h3>${marina.name}</h3>
+        <div id='marina-rating'>${marina.rating}</div>
 
-//template literal to populate the detail information for the given product
-//todo form template
-function marinaDetailsTemplate(product) {
-    return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
-        <h2 class="divider">${product.NameWithoutBrand}</h2>
+        <div id='marina-image-container'>
+            <img
+            class="divider"
+            src="${marina.images.data[0].full_url}"
+            alt="${marina.name}"
+            />
+        </div>
+        </section>`;
+}
+/* 
+        <a id='marina-website' href="${marina.web_url}">website</a>
+*/
+
+/* 
+        <h2 class="divider">${marina.NameWithoutBrand}</h2>
         <img
             class="divider"
-            src="${product.Images.PrimaryLarge}"
-            alt="${product.NameWithoutBrand}"
+            src="${marina.Images.PrimaryLarge}"
+            alt="${marina.NameWithoutBrand}"
         />
-        <p class="product-card__price">$${product.FinalPrice}</p>
-        <p class="product__color">${product.Colors[0].ColorName}</p>
-        <p class="product__description">
-        ${product.DescriptionHtmlSimple}
+        <p class="marina-card__price">$${marina.FinalPrice}</p>
+        <p class="marina__color">${marina.Colors[0].ColorName}</p>
+        <p class="marina__description">
+        ${marina.DescriptionHtmlSimple}
         </p>
-        <div class="product-detail__add">
-            <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
-        </div></section>`;
-}
-
+        <div class="marina-detail__add">
+            <button id="addToCart" data-id="${marina.Id}">Add to Cart</button>
+*/
 
 
 //https://marinas.com/developers/api_documentation

@@ -1,7 +1,8 @@
-import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink} from "./utils.mjs";
-import { updateMapOptions } from "./windy.mjs";
+import { loadHeaderFooter, showElement, convertLocationToCoords, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink, convertCoordToLocation} from "./utils.mjs";
+//import { updateMapOptions } from "./windy.mjs";
 import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
-import Marina from "./marinas.mjs";
+import Marina from "./Marinas.mjs";
+import Map from "./Map.mjs";
 
 const mapElement = document.getElementById('windy');
 const searchButton = document.getElementById('searchButton');
@@ -84,14 +85,14 @@ async function search() {
         // break it up into 3 parts to pass into the conversion function
         let { city, state, country } = splitCityStateCountry(searchInput.value);
         // convert to coords
-        const coords = await convertCoordToLocation(city, state, country);
+        const coords = await convertLocationToCoords(city, state, country);
         const lat = coords.lat;
         const lon = coords.lng;
-        //const marinas = await getMarinaInfoFromSearch(lat, lon)
         const marinas = new Marina("", lat, lon, "SEARCH");
         await marinas.init(); // Wait for marinas data to be initialized        
         const marinasArray = marinas.getMarinaArray();
-        updateMapOptions(lat, lon, marinasArray);
+        //new map object
+        const map = new Map(lat, lon, marinasArray, "SEARCH");
+        map.init()
     }
 }
-

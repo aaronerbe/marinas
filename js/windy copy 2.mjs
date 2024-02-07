@@ -23,6 +23,8 @@ export function updateMapOptions(myLat, myLon, marinas){
             windyAPI = api;
             //will have to pass a list eventually for the markers
             renderMap(myLat, myLon, marinas);
+            //renderMarinaDetailsMap(myLat, myLon, marinas);
+
         });
     }
 }
@@ -60,12 +62,102 @@ function renderMap(lat, lon, marinas) {
             topLayer.setOpacity('0');
         }
     });
-    map.setZoom(11);
+    if (marinas){
+        map.setZoom(11);
+    }else{
+        map.setZoom(15)
+    }
 
     // Place markers for each marina location
+    //if marinas isn't empty, then populate all of them...
+    console.log(typeof(marinas));
+    console.log(marinas);
+    console.log(typeof(marinas.data))
+    console.log(marinas.data);
+    if (marinas){
+        Object.values(marinas.data).forEach(marina => {
+            const { id, name, location, kind } = marina;
+            const { lat, lon } = location;
+    
+            // Create a marker element for each marina
+            if (kind === 'marina') {
+                const marker = L.marker([lat, lon]);
+                //dynamically add a div with a link containing the marina name that is clickable.  adds it to the popup
+                marker.bindPopup(`<div id="popupContent"><a href="#" id="marinaLink">${name}</a></div>`).openPopup();
+                // Add a click event listener to the link inside the popup
+                marker.on('popupopen', () => {
+                    const popupContent = document.getElementById('popupContent');
+                    const marinaLink = document.getElementById('marinaLink');
+    
+                    // Add a click event listener to the link
+                    marinaLink.addEventListener('click', () => {
+                        // Navigate to the marina-details.html page.  with a query on the end to pass on to the api and pull the required ino
+                        //This, or pass the the info directly??  Need to determine.  
+                        window.location.href = `marina-details.html?marina=${id}`;
+                    });
+                });
+    
+                markerCluster.addLayer(marker);
+            }
+        });
+    }
+
+    // Add the marker cluster group to the map
+    map.addLayer(markerCluster);
+    //Adds the openstreetmap layer (hack to fix zoom limitation)
+    map.addLayer(topLayer);
+
+    // Center the map on the search location
+    map.setView([lat, lon], map.getZoom());
+}
+
+
+function renderMarinaDetailsMap(lat, lon, marinas) {
+    if (!windyAPI) {
+        console.error('Windy API not initialized');
+        return;
+    }
+
+    const { map } = windyAPI;
+
+    // Create a marker cluster group
+    const markerCluster = L.markerClusterGroup();
+
+    // Create a marker for the search location
+    const searchMarker = L.marker([lat, lon]).addTo(markerCluster);
+    searchMarker.bindPopup('<b>Your Marker</b>').openPopup();
+
+    // MAP HACK try to fix zoom:
+    map.options.minZoom = 4;
+    map.options.maxZoom = 17;
+
+    var topLayer = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, ',
+        minZoom: 12,
+        maxZoom: 17
+    }).addTo(map)
+    topLayer.setOpacity('0');
+    map.on('zoomend', function() {
+        if (map.getZoom() >= 12) {
+            topLayer.setOpacity('0.5');
+        } else {
+            topLayer.setOpacity('0');
+        }
+    });
+    if (marinas){
+        map.setZoom(11);
+    }else{
+        map.setZoom(15)
+    }
+
+    // Place markers for each marina location
+    //if marinas isn't empty, then populate all of them...
+    const marinasData = marinas.data;
+
+    //for (const marinaID in marinasData) {
     Object.values(marinas.data).forEach(marina => {
-        const { id, name, location, kind } = marina;
-        const { lat, lon } = location;
+            const { id, name, kind, location } = marina.data;
+            const { lat, lon } = location;
 
         // Create a marker element for each marina
         if (kind === 'marina') {
@@ -97,3 +189,5 @@ function renderMap(lat, lon, marinas) {
     // Center the map on the search location
     map.setView([lat, lon], map.getZoom());
 }
+
+

@@ -118,11 +118,11 @@ export function hideElement(element) {
 }
 
 /* 
-░█▀▀░█▀█░█▀█░█▀▄░█▀▄░░░▀█▀░█▀█░░░█▀▀░▀█▀░▀█▀░█░█░░░█░█▀▀░▀█▀
-░█░░░█░█░█░█░█▀▄░█░█░░░░█░░█░█░░░█░░░░█░░░█░░░█░░▄▀░░▀▀█░░█░
-░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░░░░░▀░░▀▀▀░░░▀▀▀░▀▀▀░░▀░░░▀░░▀░░░▀▀▀░░▀░
+░█▀▀░▀█▀░▀█▀░█░█░░░█░█▀▀░▀█▀░░░▀█▀░█▀█░░░█▀▀░█▀█░█▀█░█▀▄░█▀▄
+░█░░░░█░░░█░░░█░░▄▀░░▀▀█░░█░░░░░█░░█░█░░░█░░░█░█░█░█░█▀▄░█░█
+░▀▀▀░▀▀▀░░▀░░░▀░░▀░░░▀▀▀░░▀░░░░░▀░░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░
 */
-export async function convertCoordToLocation(city, state, country) {
+export async function convertLocationToCoords(city, state, country) {
     //convert location search into usable coordinates
     try {
         const geocodingApiKey = '8f14ece6e8f5486286773645b8098166';
@@ -141,6 +141,36 @@ export async function convertCoordToLocation(city, state, country) {
             const coordinates = data.results[0].geometry;
             //initializeMap(coordinates.lat, coordinates.lng);
             return coordinates;
+        } else {
+            throw new Error('Geocoding failed. No results found.');
+        }
+    } catch (error) {
+        console.error('Error during geocoding:', error);
+        throw error;
+    }
+}
+/* 
+░█▀▀░█▀█░█▀█░█▀▄░█▀▄░░░▀█▀░█▀█░░░█▀▀░▀█▀░▀█▀░█░█░░░█░█▀▀░▀█▀
+░█░░░█░█░█░█░█▀▄░█░█░░░░█░░█░█░░░█░░░░█░░░█░░░█░░▄▀░░▀▀█░░█░
+░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░░░░░▀░░▀▀▀░░░▀▀▀░▀▀▀░░▀░░░▀░░▀░░░▀▀▀░░▀░
+*/
+export async function convertCoordToLocation(lat, lon) {
+    try {
+        const geocodingApiKey = '8f14ece6e8f5486286773645b8098166';
+        const geocodingEndpoint = 'https://api.opencagedata.com/geocode/v1/json';
+
+        // Construct the geocoding API request URL with coordinates
+        const query = `${lat},${lon}`;
+        const geocodingUrl = `${geocodingEndpoint}?q=${encodeURIComponent(query)}&key=${geocodingApiKey}`;
+
+        // Perform the geocoding request
+        const response = await fetch(geocodingUrl);
+        const data = await response.json();
+
+        if (data.results.length > 0) {
+            // Extract city name from the first result
+            const city = data.results[0].components.city;
+            return city;
         } else {
             throw new Error('Geocoding failed. No results found.');
         }

@@ -1,9 +1,34 @@
-import Marina from "./marinas.mjs";
-import { getParams } from "./utils.mjs";
+import Marina from "./Marinas.mjs";
+import { getParams, loadHeaderFooter } from "./utils.mjs";
+import Map from "./Map.mjs";
+/*
+░█░░░█▀█░█▀█░█▀▄░░░█░█░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█░█▀▀░█▀█░█▀█░▀█▀░█▀▀░█▀▄
+░█░░░█░█░█▀█░█░█░░░█▀█░█▀▀░█▀█░█░█░█▀▀░█▀▄░▄▀░░█▀▀░█░█░█░█░░█░░█▀▀░█▀▄
+░▀▀▀░▀▀▀░▀░▀░▀▀░░░░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀░░░▀░░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀
+*/
+loadHeaderFooter();
 
+
+/* 
+░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀█░█▀▄░▀▀█░█▀▀░█▀▀░▀█▀
+░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█░█░█▀▄░░░█░█▀▀░█░░░░█░
+░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀░▀░░░▀▀▀░▀▀░░▀▀░░▀▀▀░▀▀▀░░▀░
+*/
 const marinaID = getParams('marina');
 const marina = new Marina(marinaID,0,0,"ID");
 await marina.init();
-const marinaArray = marina.getMarinaArray();
-console.table('marina array =',marinaArray);
-//marina.init();
+console.log(marina);
+//const marinaArray = marina.getMarinaArray();
+marina.renderMarinaDetails('marina-details');
+console.table('marina array =',marina);
+
+/* 
+░█▀▄░█░█░▀█▀░█░░░█▀▄░░░█▄█░█▀█░█▀█
+░█▀▄░█░█░░█░░█░░░█░█░░░█░█░█▀█░█▀▀
+░▀▀░░▀▀▀░▀▀▀░▀▀▀░▀▀░░░░▀░▀░▀░▀░▀░░
+*/
+const lat = marina.data.location.lat;
+const lon = marina.data.location.lon;
+//map object
+const map = new Map(lat, lon, marina, "DETAIL")
+map.init();

@@ -5,4 +5,6 @@ email icon: https://www.iconfinder.com/icons/211737/email_icon
 hamburger:  https://www.iconfinder.com/icons/1814109/hamburger_menu_icon
 bookmark: https://www.iconfinder.com/icons/3994430/bookmark_label_ribbon_save_web_icon
 favorite:  https://www.iconfinder.com/icons/2849817/favorite_star_favorites_favourite_multimedia_icon
+home (map):  https://www.iconfinder.com/icons/330406/home_icon
+
 
