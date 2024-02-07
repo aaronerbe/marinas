@@ -1,8 +1,7 @@
 import { loadHeaderFooter, showElement, convertCoordToLocation, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink} from "./utils.mjs";
-//import windyMap from "./windy.js";
 import { updateMapOptions } from "./windy.mjs";
-import { getMarinaInfoFromSearch } from "./marinas.mjs";
 import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
+import Marina from "./marinas.mjs";
 
 const mapElement = document.getElementById('windy');
 const searchButton = document.getElementById('searchButton');
@@ -76,8 +75,8 @@ searchInput.addEventListener('keydown', async(event) => {
         search(searchInput)
     }
 })
-async function search(){
-    if (searchInput.value != ""){
+async function search() {
+    if (searchInput.value != "") {
         if (mapElement.classList.contains('hidden')) {
             showElement(mapElement);
             slideAndShrink();
@@ -88,8 +87,11 @@ async function search(){
         const coords = await convertCoordToLocation(city, state, country);
         const lat = coords.lat;
         const lon = coords.lng;
-        const marinas = await getMarinaInfoFromSearch(lat, lon)
-        updateMapOptions(lat, lon, marinas);
+        //const marinas = await getMarinaInfoFromSearch(lat, lon)
+        const marinas = new Marina("", lat, lon, "SEARCH");
+        await marinas.init(); // Wait for marinas data to be initialized        
+        const marinasArray = marinas.getMarinaArray();
+        updateMapOptions(lat, lon, marinasArray);
     }
-
 }
+

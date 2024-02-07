@@ -192,3 +192,15 @@ export function slideAndShrink(){
     imgContainer.classList.add('shrink');
     searchContainer.classList.add('slide-up');
 }
+
+/*
+░█▀▀░█▀▀░▀█▀░░█▀█░█▀█░█▀▄░█▀█░█▄█░█▀▀
+░█░█░█▀▀░░█░░░█▀▀░█▀█░█▀▄░█▀█░█░█░▀▀█
+░▀▀▀░▀▀▀░░▀░░░▀░░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀▀
+*/
+export function getParams(param){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const product = urlParams.get(param)
+    return product;
+}

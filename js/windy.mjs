@@ -81,7 +81,7 @@ function renderMap(lat, lon, marinas) {
                 marinaLink.addEventListener('click', () => {
                     // Navigate to the marina-details.html page.  with a query on the end to pass on to the api and pull the required ino
                     //This, or pass the the info directly??  Need to determine.  
-                    window.location.href = `yourPage.html/?name:${id}`;
+                    window.location.href = `marina-details.html?marina=${id}`;
                 });
             });
 
