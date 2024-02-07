@@ -8,7 +8,6 @@ import Map from "./Map.mjs";
 */
 loadHeaderFooter();
 
-
 /* 
 ░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀█░█▀▄░▀▀█░█▀▀░█▀▀░▀█▀
 ░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█░█░█▀▄░░░█░█▀▀░█░░░░█░
@@ -18,7 +17,6 @@ const marinaID = getParams('marina');
 const marina = new Marina(marinaID,0,0,"ID");
 await marina.init();
 console.log(marina);
-//const marinaArray = marina.getMarinaArray();
 marina.renderMarinaDetails('marina-details');
 console.table('marina array =',marina);
 

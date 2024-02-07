@@ -1,5 +1,4 @@
 import { loadHeaderFooter, showElement, convertLocationToCoords, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink, convertCoordToLocation} from "./utils.mjs";
-//import { updateMapOptions } from "./windy.mjs";
 import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
 import Marina from "./Marinas.mjs";
 import Map from "./Map.mjs";
@@ -90,9 +89,8 @@ async function search() {
         const lon = coords.lng;
         const marinas = new Marina("", lat, lon, "SEARCH");
         await marinas.init(); // Wait for marinas data to be initialized        
-        const marinasArray = marinas.getMarinaArray();
         //new map object
-        const map = new Map(lat, lon, marinasArray, "SEARCH");
+        const map = new Map(lat, lon, marinas, "SEARCH");
         map.init()
     }
 }

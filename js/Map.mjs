@@ -68,7 +68,8 @@ export default class Map{
         // Create a marker cluster group
         const markerCluster = L.markerClusterGroup();
         //iterate through the marina data and add a marker for each location
-        Object.values(this.marinas.data).forEach(marina => {
+        //data.data because it's double deep in the JSON
+        Object.values(this.marinas.data.data).forEach(marina => {
             const { id, name, location, kind } = marina;
             const { lat, lon } = location;
             // Create a marker element for each marina
@@ -91,8 +92,6 @@ export default class Map{
         });
         // Add the marker cluster group to the map
         map.addLayer(markerCluster);
-        // Center the map on the search location
-        map.setView([lat, lon], map.getZoom());
     }
     buildHyperZoom(map){
         // MAP HACK to fix zoom:
