@@ -7,5 +7,8 @@ bookmark: https://www.iconfinder.com/icons/3994430/bookmark_label_ribbon_save_we
 favorite:  https://www.iconfinder.com/icons/2849817/favorite_star_favorites_favourite_multimedia_icon
 home (map):  https://www.iconfinder.com/icons/330406/home_icon
 home (map) pin: https://www.iconfinder.com/icons/22903/gps_location_needle_pin_push_pin_thumbtack_icon
+rating stars:  	https://www.iconfinder.com/icons/49625/rating_star_half_icon
+		https://www.iconfinder.com/icons/49623/empty_star_icon
+		https://www.iconfinder.com/icons/49624/bookmark_favorite_full_rating_star_icon
 
 

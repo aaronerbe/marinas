@@ -16,9 +16,9 @@ loadHeaderFooter();
 const marinaID = getParams('marina');
 const marina = new Marina(marinaID,0,0,"ID");
 await marina.init();
-console.log(marina);
+//console.log(marina);
 marina.renderMarinaDetails('marina-details');
-console.table('marina array =',marina);
+//console.table('marina array =',marina);
 
 /* 
 ░█▀▄░█░█░▀█▀░█░░░█▀▄░░░█▄█░█▀█░█▀█
@@ -28,5 +28,5 @@ console.table('marina array =',marina);
 const lat = marina.data.location.lat;
 const lon = marina.data.location.lon;
 //map object
-const map = new Map(lat, lon, marina, "DETAIL")
-map.init();
+const map = new Map()
+map.init(lat, lon, marina, "DETAIL");
