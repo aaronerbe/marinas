@@ -65,6 +65,7 @@ export function populateFavoritesMenu(elementContainer, key) {
                 if (!menuContainer.contains(event.target) && !bookmarksElement.contains(event.target)) {
                     hideElement(menuContainer);
                     document.removeEventListener('click', clickOutsideMenu);
+                    map.style.zIndex='100';
                 }
             }
             document.addEventListener('click', clickOutsideMenu);
