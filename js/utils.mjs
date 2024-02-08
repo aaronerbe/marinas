@@ -8,8 +8,6 @@ export async function loadHeaderFooter(){
     //grab header/footer elements
     const header = document.getElementById('main-header');
     const footer = document.getElementById('main-footer');
-    console.log(header);
-    console.log(footer);
     //grab the template data
     const headerTemplate = await loadTemplate('./header.html');
     const footerTemplate = await loadTemplate('./footer.html');
@@ -82,14 +80,8 @@ export function renderMessage(message, targetElement) {
     const element = document.getElementById(targetElement);
     msg.id = 'popup-message';
     msg.innerHTML = message;
-    
-    // Add class to position the message below the target element
-    //msg.classList.add('below');
-    
-    // Insert the new element just below the target element
-    //targetElement.parentNode.insertBefore(msg, targetElement.nextSibling);
-    //targetElement.insertAdjacentElement('afterend', msg);
     element.appendChild(msg)
+
 
 }
 export function hideMessage() {

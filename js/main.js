@@ -1,7 +1,9 @@
 import { loadHeaderFooter, showElement, convertLocationToCoords, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink, convertCoordToLocation} from "./utils.mjs";
-import { populateFavoritesMenu, saveFavorite } from "./favorites.mjs";
+//import { populateFavoritesMenu, saveFavorite } from "./Favorites.mjs";
 import Marina from "./Marinas.mjs";
 import Map from "./Map.mjs";
+import Favorites from "./Favorites.mjs";
+
 
 const mapElement = document.getElementById('windy');
 const searchButton = document.getElementById('searchButton');
@@ -9,7 +11,10 @@ const searchInput = document.getElementById('searchInput')
 const saveFavElement = document.getElementById('saveFavButton');
 const bookmarksElement = document.getElementById('bookmarkButton');
 const menuClass = document.getElementById('favoritesMenu').classList
+const favorites = new Favorites('favLocations');
 
+        //new map object
+        const map = new Map();
 
 /* 
 ░█░░░█▀█░█▀█░█▀▄░░░█░█░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█░█▀▀░█▀█░█▀█░▀█▀░█▀▀░█▀▄
@@ -24,7 +29,8 @@ loadHeaderFooter()
 ░▀▀▀░▀░░░▀▀▀░▀░▀░░░▀▀░░▀▀▀░▀▀▀░▀░▀░▀░▀░▀░▀░▀░▀░▀░▀
 */
 bookmarksElement.addEventListener('click', () => {
-    populateFavoritesMenu('favoritesMenu', 'favLocations');
+    //populateFavoritesMenu('favoritesMenu', 'favLocations');
+    favorites.showFavoritesMenu('favoritesMenu', 'bookmarkButton', 'windy')
 });
 //generate & hide popup message
 bookmarksElement.addEventListener('mouseenter', () => {
@@ -48,7 +54,8 @@ bookmarksElement.addEventListener('mouseleave', () => {
 ░▀▀▀░▀░▀░░▀░░▀▀▀░░░▀░░░▀░▀░░▀░░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀
 */
 saveFavElement.addEventListener('click', () => {
-    saveFavorite(searchInput.value);
+    //saveFavorite(searchInput.value);
+    favorites.saveFavorite(searchInput.value)
 });
 //generate & hide popup message
 saveFavElement.addEventListener('mouseenter', () => {
@@ -89,8 +96,7 @@ async function search() {
         const lon = coords.lng;
         const marinas = new Marina("", lat, lon, "SEARCH");
         await marinas.init(); // Wait for marinas data to be initialized        
-        //new map object
-        const map = new Map(lat, lon, marinas, "SEARCH");
-        map.init()
+
+        map.init(lat, lon, marinas, "SEARCH")
     }
 }

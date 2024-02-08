@@ -1,18 +1,22 @@
 import { convertCoordToLocation } from "./utils.mjs";
 
 export default class Map{
-    constructor(lat, lon, marinas, type){
-        this.lat = lat;
-        this.lon = lon;
-        this.marinas = marinas;
-        this.type = type.toLowerCase();
+    constructor(){
+        this.lat = "";
+        this.lon = "";
+        this.marinas = "";
+        this.type = "";
         this.name = ""
         this.key = 'qrQODxrOJqHA9Xn70LbOLmFhIVEEWg4h';
         this.icon = './images/icons/map-home.png';
         this.windyAPI
     }
 
-    async init(){
+    async init(lat, lon, marinas, type){
+        this.lat = lat;
+        this.lon = lon;
+        this.marinas = marinas;
+        this.type = type.toLowerCase();
         await this.getName()
         this.getHomeOrMarinaIcon()
         if (this.windyAPI){
@@ -22,7 +26,7 @@ export default class Map{
             windyInit(this.buildOptions(), api=>{
                 this.windyAPI = api;
                 this.renderMap()
-            })
+            });
         }
     }
     buildOptions(){
