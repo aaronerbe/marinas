@@ -1,3 +1,4 @@
+//API Key: pBxq8ZZbusrijEzNSgDB
 /* 
 ░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀▀░█░░░█▀█░█▀▀░█▀▀
 ░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█░░░█░░░█▀█░▀▀█░▀▀█
@@ -10,6 +11,7 @@ export default class Marina {
         this.lon = lon;
         this.type = type;
         this.data = {};
+        this.key = 'pBxq8ZZbusrijEzNSgDB';
     }
 
     async init() {
@@ -27,8 +29,38 @@ export default class Marina {
             url = this.buildBaseURL(this.marinaID);
         }
         else{
-            url = this.buildBaseURL(this.lat, this.lon); // Pass this.lat and this.lon
+            url = this.buildBaseURL(this.lat, this.lon, this.accessToken); // Pass this.accessToken
         }
+        const response = await fetch(url, {
+            method: 'GET', // GET method doesn't have a body
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        this.data = await response.json();
+    }
+    
+    /* Build the base URL with access token as a query parameter */
+    buildBaseURL(latOrMarinaID, lon, accessToken) {
+        if (lon !== undefined) {
+            // If lon is defined, it means we are building a search URL
+            return `https://api.marinas.com/v1/points/search?location[lat]=${latOrMarinaID}&location[lon]=${lon}&access_token=${accessToken}`;
+        } else {
+            // Otherwise, it's an ID URL
+            return `https://api.marinas.com/v1/points/${latOrMarinaID}?access_token=${accessToken}`;
+        }
+    }
+    
+    
+/*    async fetchMarinaData() {
+        let url = "";
+        if (this.type == "ID"){
+            url = this.buildBaseURL(this.marinaID) + '?';
+        }
+        else{
+            url = this.buildBaseURL(this.lat, this.lon) + '&'; // Pass this.lat and this.lon
+        }
+        url += `access_token=${this.key}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -36,7 +68,7 @@ export default class Marina {
             },
         });
         this.data = await response.json();
-    }
+    }*/
     
     /* 
     ░█▀▄░█░█░▀█▀░█░░░█▀▄░░░█░█░█▀▄░█░░
