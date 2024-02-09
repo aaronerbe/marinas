@@ -1,4 +1,3 @@
-//API Key: pBxq8ZZbusrijEzNSgDB
 /* 
 ░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀▀░█░░░█▀█░█▀▀░█▀▀
 ░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█░░░█░░░█▀█░▀▀█░▀▀█
@@ -11,7 +10,7 @@ export default class Marina {
         this.lon = lon;
         this.type = type;
         this.data = {};
-        this.key = 'pBxq8ZZbusrijEzNSgDB';
+        this.key = 'YYmZxvMSyMqaCyf6PuLz';
     }
 
     async init() {
@@ -29,9 +28,10 @@ export default class Marina {
             url = this.buildBaseURL(this.marinaID);
         }
         else{
-            url = this.buildBaseURL(this.lat, this.lon, this.accessToken); // Pass this.accessToken
+            url = this.buildBaseURL(this.lat, this.lon); // Pass this.accessToken
         }
         const response = await fetch(url, {
+        //const response = await fetch("https://api.marinas.com/v1/marinas/4qcq", {
             method: 'GET', // GET method doesn't have a body
             headers: {
                 'Content-Type': 'application/json',
@@ -40,49 +40,21 @@ export default class Marina {
         this.data = await response.json();
     }
     
-    /* Build the base URL with access token as a query parameter */
-    buildBaseURL(latOrMarinaID, lon, accessToken) {
-        if (lon !== undefined) {
-            // If lon is defined, it means we are building a search URL
-            return `https://api.marinas.com/v1/points/search?location[lat]=${latOrMarinaID}&location[lon]=${lon}&access_token=${accessToken}`;
-        } else {
-            // Otherwise, it's an ID URL
-            return `https://api.marinas.com/v1/points/${latOrMarinaID}?access_token=${accessToken}`;
-        }
-    }
-    
-    
-/*    async fetchMarinaData() {
-        let url = "";
-        if (this.type == "ID"){
-            url = this.buildBaseURL(this.marinaID) + '?';
-        }
-        else{
-            url = this.buildBaseURL(this.lat, this.lon) + '&'; // Pass this.lat and this.lon
-        }
-        url += `access_token=${this.key}`;
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        this.data = await response.json();
-    }*/
-    
     /* 
     ░█▀▄░█░█░▀█▀░█░░░█▀▄░░░█░█░█▀▄░█░░
     ░█▀▄░█░█░░█░░█░░░█░█░░░█░█░█▀▄░█░░
     ░▀▀░░▀▀▀░▀▀▀░▀▀▀░▀▀░░░░▀▀▀░▀░▀░▀▀▀
     */
+    /* Build the base URL with access token as a query parameter */
     buildBaseURL(latOrMarinaID, lon) {
         if (lon !== undefined) {
             // If lon is defined, it means we are building a search URL
-            return `https://api.marinas.com/v1/points/search?location[lat]=${latOrMarinaID}&location[lon]=${lon}`;
+            return `https://api.marinas.com/v1/marinas/search?location[lat]=${latOrMarinaID}&location[lon]=${lon}&access_token=${this.key}`;
         } else {
             // Otherwise, it's an ID URL
-            //console.log(`https://api.marinas.com/v1/points/${latOrMarinaID}`);
-            return `https://api.marinas.com/v1/points/${latOrMarinaID}`;
+            return `https://api.marinas.com/v1/marinas/${latOrMarinaID}`
+            //return `https://api.marinas.com/v1/marinas/${latOrMarinaID}?access_token=${this.key}`;
+            //return `https://api.marinas.com/v1/marinas/4qcq`
         }
     }
     
@@ -112,25 +84,31 @@ export default class Marina {
 */
 function marinaDetailsTemplate(marina) {
     const imgElements = buildImages(marina);
-    console.log(marina)
+    console.log(marina);
     const ratings = buildRatings(marina);
-    const url = buildWebURL(marina)
+    const url = buildWebURL(marina);
+    const fuelElements = buildFuel(marina);
     
 
     return `
-    <section class="marina-detail"> 
-        <h3>${marina.name}</h3>
-        ${url}
+    <section id="marina-details"> 
+        <h1 id="marina-name">${marina.name}</h1>
+        <!--#marina-url-->
+        <!--${url}-->
+        <!--#rating-container-->
         ${ratings}
         <div id='marina-image-container'>
-            <img
-            class="divider"
             ${imgElements}
         </div>
-        </section>`;
+        <div id='services'>
+            <h2 id='services-title'>Services & Amenities</h2>
+            ${fuelElements}
+        </div>
+    </section>`;
 }
 
 function buildImages(marina){
+    //accomodating for multiple images but I've not found a marina that has more than 1 yet.  might be an api limitation...
     let imgElements ="";
     const name = marina.name;
     if(marina.images.data.length >0){
@@ -142,13 +120,11 @@ function buildImages(marina){
         return imgElements;
     }
 }
-
 function buildWebURL(marina){
     if (marina.web_url){
         return `<a id="marina-url" href="${marina.web_url}">${marina.name}</a>`
     }
 }
-
 function buildRatings(marina) {
     let ratingCount = 0;
     let star1 = "";
@@ -185,7 +161,6 @@ function buildRatings(marina) {
     }
     return ratingContainer;
 }
-
 function createStarImage(isFull, isHalf) {
     if (isFull) {
         return "<img src='./images/icons/full-star.png'>";
@@ -194,4 +169,60 @@ function createStarImage(isFull, isHalf) {
     } else {
         return "<img src='./images/icons/no-star.png'>";
     }
+}
+function buildFuel(marina){
+    let fuelElements = "";
+    const dieselPrice = marina.fuel.diesel_price;
+    const gasPremiumPrice = marina.fuel.gas_premium_price;
+    const gasRegularPrice = marina.fuel.gas_regular_price;
+    const gasSuperPrice = marina.fuel.gas_super_price;
+    const propanePrice = marina.fuel.propane_price;
+
+    const hasDiesel = marina.fuel.has_diesel;
+    const hasGas = marina.fuel.has_gas;
+    const hasPropane = marina.fuel.has_propane;
+
+    const dieselIcon = hasOrNot(hasDiesel);
+    const gasIcon = hasOrNot(hasGas);
+    const propaneIcon = hasOrNot(hasPropane);
+
+    function hasOrNot(item){
+        console.log(item)
+        if (item){
+            return `<img src="./images/icons/green_check.svg" alt="">`;
+        }else{
+            return `<img src="./images/icons/red_x.svg" alt="">`;
+        }
+    }
+
+    fuelElements = `
+    <div id="fuel-container" class="grid-container">
+        <div id="fuel-title-header"> Fuel</div>
+        <div id="fuel-icon-header"> Service</div>
+        <div id="fuel-price-header"> Price per Gal</div>
+
+        <div class="fuel-title">Diesel:</div>
+        <div class="fuel-icon">${dieselIcon}</div>
+        <div class="fuel-price">${dieselPrice}</div>
+
+        <div class="fuel-title">Gas:</div>
+        <div class="fuel-icon">${gasIcon}</div>
+        <div class="fuel-price1">${gasPremiumPrice}</div>
+        <div class="fuel-price2">${gasSuperPrice}</div>
+        <div class="fuel-price3">${gasRegularPrice}</div>
+
+        <div class="fuel-title">Propane:</div>
+        <div class="fuel-icon">${propaneIcon}</div>
+        <div class="fuel-price">${propanePrice}</div>
+
+        <div class="fuel-gap"></div>
+    </div>
+    `;
+    return fuelElements;
+}
+function location(marina){
+
+}
+function buildWhatThreeWords(marina){
+
 }

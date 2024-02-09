@@ -29,4 +29,5 @@ const lat = marina.data.location.lat;
 const lon = marina.data.location.lon;
 //map object
 const map = new Map()
-map.init(lat, lon, marina, "DETAIL");
+//todo temporarily disabling cause I hit my limit developing...
+//map.init(lat, lon, marina, "DETAIL");

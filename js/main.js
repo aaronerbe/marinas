@@ -96,7 +96,7 @@ async function search() {
         const lon = coords.lng;
         const marinas = new Marina("", lat, lon, "SEARCH");
         await marinas.init(); // Wait for marinas data to be initialized        
-
+        console.log(marinas);
         map.init(lat, lon, marinas, "SEARCH")
     }
 }
