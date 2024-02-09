@@ -1,0 +1,84 @@
+<section id="marina-details"> 
+    <!--#marina-url-->
+    <!--${url}-->
+    <!--#rating-container-->
+</section>`;
+
+
+
+<body id="marina-details-body">
+    <header class="divider" id="main-header"></header>    
+    <main id="marina-details-main">
+        <div id="marina-details">
+            <h1 id="marina-name">${marina.name}</h1>
+            
+            <div id="marina-details-card1">
+                <!-- #marinaDetailsImgContainer -->
+                ${marinaDetailsImgContainer}
+                <!-- #marinaDetailsRatings -->
+                    <!-- #rating-count -->
+                    <!-- #stars -->
+                ${marinaDetailsRatings}
+                <div id='services' class="divider">
+                    <h2 id='marinaDetails-services-title' class="divider">Services & Amenities</h2>
+                    <!--#fuel-container .grid-container  -->
+                        <!-- #fuel-title-header  -->
+                            <!-- <img> -->    
+                            <!-- #fuel-title-desc -->
+                        <!-- #fuel-icon-header  -->
+                        <!-- #fuel-price-header -->
+
+                        <!-- .fuel-title -->
+                        <!-- .fiel-icon -->
+                        <!-- .fuel-price(1) -->
+                        <!-- .fuel-price2 -->
+                        <!-- .fuel-price3 -->
+
+                        <!-- .fuel-gap -->
+                    ${marinaDetailsFuel}
+                </div>
+            </div>
+            <div id="marina-details-card2">
+                <div id="windy" class="divider details-windy"></div>
+                <div id="marinaDetailsLocation">Coords, Address, What3Words</div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="main-footer"></footer>
+</body>
+
+
+
+
+<div id="fuel-container" class="grid-container">
+    <div id="fuel-title-header"> Fuel</div>
+    <div id="fuel-icon-header"> Service</div>
+    <div id="fuel-price-header"> Price per Gal</div>
+
+    <div class="fuel-container" id="diesel-container">
+        <img src="./images/icons/diesel-white.svg" alt="Diesel Icon"> 
+        <span class="fuel-title-desc">Diesel:</span> 
+        <div class="fuel-icon">${dieselIcon}</div>
+        <div class="fuel-price">${dieselPrice}</div>
+    </div>
+
+    <div class="fuel-container" id="gas-container">
+        <img src="./images/icons/gas-white.svg" alt="Gas Icon"> 
+        <span class="fuel-title-desc">Gas:</span> 
+        <div class="fuel-icon">${gasIcon}</div>
+        <div class="fuel-price1">${gasPremiumPrice}</div>
+        <div class="fuel-price2">${gasSuperPrice}</div>
+        <div class="fuel-price3">${gasRegularPrice}</div>
+    </div>
+
+    <div class="fuel-container" id="propane-container">
+        <img src="./images/icons/propane-white.svg" alt="Propane Icon"> 
+        <span class="fuel-title-desc">Propane:</span> 
+        <div class="fuel-icon">${propaneIcon}</div>
+        <div class="fuel-price">${propanePrice}</div>
+    </div>
+
+    <div class="fuel-gap"></div>
+</div>
+

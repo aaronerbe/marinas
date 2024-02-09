@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="102.991 99.535 256 256" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <rect fill="none" height="256" width="256" x="102.991" y="99.535"
+    transform="matrix(1, 0, 0, 1, -7.105427357601002e-15, -3.552713678800501e-15)" />
+  <path
+    d="M 158.991 315.535 L 158.991 155.535 C 158.991 146.698 166.155 139.535 174.991 139.535 L 254.991 139.535 C 263.828 139.535 270.991 146.698 270.991 155.535 L 270.991 315.535"
+    fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"
+    transform="matrix(1, 0, 0, 1, -7.105427357601002e-15, -3.552713678800501e-15)" />
+  <line fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"
+    x1="134.991" x2="294.991" y1="315.535" y2="315.535"
+    transform="matrix(1, 0, 0, 1, -7.105427357601002e-15, -3.552713678800501e-15)" />
+  <path
+    d="M 270.991 211.535 L 294.991 211.535 C 303.828 211.535 310.991 218.698 310.991 227.535 L 310.991 267.535 C 310.991 276.372 318.155 283.535 326.991 283.535 C 335.828 283.535 342.991 276.372 342.991 267.535 L 342.991 186.135 C 342.973 181.897 341.284 177.836 338.291 174.835 L 318.991 155.535"
+    fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"
+    transform="matrix(1, 0, 0, 1, -7.105427357601002e-15, -3.552713678800501e-15)" />
+  <path
+    d="M 194.447 184.462 C 194.447 184.462 230.734 180.806 239.374 207.885 L 239.199 207.965 C 242.436 240.379 193.624 238.158 194.065 236.687 C 193.489 213.064 194.441 184.462 194.447 184.462 Z"
+    fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"
+    transform="matrix(1, 0, 0, 1, -7.105427357601002e-15, -3.552713678800501e-15)" />
+</svg>

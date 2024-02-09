@@ -10,5 +10,10 @@ home (map) pin: https://www.iconfinder.com/icons/22903/gps_location_needle_pin_p
 rating stars:  	https://www.iconfinder.com/icons/49625/rating_star_half_icon
 		https://www.iconfinder.com/icons/49623/empty_star_icon
 		https://www.iconfinder.com/icons/49624/bookmark_favorite_full_rating_star_icon
+gas & diesel:  https://www.iconfinder.com/icons/9026691/gas_pump_thin_icon
+propane:  modified - https://www.iconfinder.com/icons/10846169/gas_gas-cylinder_oxygen_shape_tank_oxygen-tank_oxygen-cylinder_gas-tank_equipment_icon
 
-
+right:  https://www.iconfinder.com/icons/326578/chevron_right_icon
+left:  https://www.iconfinder.com/icons/326575/chevron_left_icon
+circle right:  https://www.iconfinder.com/icons/8541708/chevron_circle_right_icon
+circle left:  https://www.iconfinder.com/icons/8541702/chevron_circle_left_icon

@@ -30,6 +30,7 @@ export default class Marina {
         else{
             url = this.buildBaseURL(this.lat, this.lon); // Pass this.accessToken
         }
+        console.log(url)
         const response = await fetch(url, {
         //const response = await fetch("https://api.marinas.com/v1/marinas/4qcq", {
             method: 'GET', // GET method doesn't have a body
@@ -49,7 +50,7 @@ export default class Marina {
     buildBaseURL(latOrMarinaID, lon) {
         if (lon !== undefined) {
             // If lon is defined, it means we are building a search URL
-            return `https://api.marinas.com/v1/marinas/search?location[lat]=${latOrMarinaID}&location[lon]=${lon}&access_token=${this.key}`;
+            return `https://api.marinas.com/v1/points/search?location[lat]=${latOrMarinaID}&location[lon]=${lon}&access_token=${this.key}`;
         } else {
             // Otherwise, it's an ID URL
             return `https://api.marinas.com/v1/marinas/${latOrMarinaID}`
@@ -83,28 +84,45 @@ export default class Marina {
 ░░▀░░▀▀▀░▀░▀░▀░░░▀▀▀░▀░▀░░▀░░▀▀▀
 */
 function marinaDetailsTemplate(marina) {
-    const imgElements = buildImages(marina);
+    const marinaDetailsImgContainer = buildImages(marina);
     console.log(marina);
-    const ratings = buildRatings(marina);
+    const marinaDetailsRatings = buildRatings(marina);
     const url = buildWebURL(marina);
-    const fuelElements = buildFuel(marina);
+    const marinaDetailsFuel = buildFuel(marina);
     
+    return`
+        <h1 id="marina-name">${marina.name}</h1>            
+        <div id="marina-details-card1">
+        <!-- #marinaDetailsImgContainer -->
+        
+        ${marinaDetailsImgContainer}
+        <!-- #marinaDetailsRatings -->
+            <!-- #rating-count -->
+            <!-- #stars -->
+        ${marinaDetailsRatings}
+        <div id='services' class="">
+            <h2 id='marinaDetails-services-title' class="divider">Services & Amenities</h2>
+            <!--#fuel-container .grid-container  -->
+                    <!-- #fuel-title-header  -->
+                    <!-- #fuel-icon-header  -->
+                    <!-- #fuel-price-header -->
 
-    return `
-    <section id="marina-details"> 
-        <h1 id="marina-name">${marina.name}</h1>
-        <!--#marina-url-->
-        <!--${url}-->
-        <!--#rating-container-->
-        ${ratings}
-        <div id='marina-image-container'>
-            ${imgElements}
+                    <!-- .fuel-title -->
+                        <!-- <img> -->    
+                        <!-- #fuel-title-desc -->
+                        <!-- .fuel-icon -->
+                    <!-- .fuel-price(1) -->
+                    <!-- .fuel-price2 -->
+                    <!-- .fuel-price3 -->
+
+                    <!-- .fuel-gap -->
+                ${marinaDetailsFuel}
         </div>
-        <div id='services'>
-            <h2 id='services-title'>Services & Amenities</h2>
-            ${fuelElements}
+        <div id="marina-details-card2">
+            <div id="windy" class="divider details-windy"></div>
+            <div id="marinaDetailsLocation">Coords, Address, What3Words</div>
         </div>
-    </section>`;
+    `;
 }
 
 function buildImages(marina){
@@ -114,10 +132,17 @@ function buildImages(marina){
     if(marina.images.data.length >0){
         marina.images.data.forEach(element => {
             if (element.full_url){
-                imgElements = imgElements + `<img src="${element.full_url}" alt="Image of ${name}">`
+                imgElements = imgElements + `<div class="slide"><img src="${element.full_url}" alt="Image of ${name}"></div>`
             }
         });
-        return imgElements;
+        let marinaDetailsImgContainer = `
+            <div id="marinaDetailsImgContainer">
+                <div class="carousel">${imgElements}</div>
+                <button class="prev-btn"><img src="./images/icons/left.svg" alt="left arrow"></button>
+                <button class="next-btn"><img src="./images/icons/right.svg" alt="right arrow"></button>
+            </div>
+        `;
+        return marinaDetailsImgContainer;
     }
 }
 function buildWebURL(marina){
@@ -132,7 +157,7 @@ function buildRatings(marina) {
     let star3 = "";
     let star4 = "";
     let star5 = "";
-    let ratingContainer = "";
+    let marinaDetailsRatings = "";
     console.log(marina.rating)
 
     if (marina.rating != null) {
@@ -157,9 +182,9 @@ function buildRatings(marina) {
         const countContainer = `<div id='count-container'><div id='rating-count'>${ratingCount} Reviews</div></div>`;
         // Create the star container
         const starContainer = `<div id='star-container'><div id='stars'>${star1}${star2}${star3}${star4}${star5}</div></div>`;
-        ratingContainer = `<div id='rating-container'> ${starContainer} ${countContainer} </div>`
+        marinaDetailsRatings = `<div id='marinaDetailsRatings'> ${starContainer} ${countContainer} </div>`
     }
-    return ratingContainer;
+    return marinaDetailsRatings;
 }
 function createStarImage(isFull, isHalf) {
     if (isFull) {
@@ -171,7 +196,7 @@ function createStarImage(isFull, isHalf) {
     }
 }
 function buildFuel(marina){
-    let fuelElements = "";
+    let marinaDetailsFuel = "";
     const dieselPrice = marina.fuel.diesel_price;
     const gasPremiumPrice = marina.fuel.gas_premium_price;
     const gasRegularPrice = marina.fuel.gas_regular_price;
@@ -194,31 +219,37 @@ function buildFuel(marina){
             return `<img src="./images/icons/red_x.svg" alt="">`;
         }
     }
+    marinaDetailsFuel = `
 
-    fuelElements = `
     <div id="fuel-container" class="grid-container">
-        <div id="fuel-title-header"> Fuel</div>
-        <div id="fuel-icon-header"> Service</div>
-        <div id="fuel-price-header"> Price per Gal</div>
 
-        <div class="fuel-title">Diesel:</div>
-        <div class="fuel-icon">${dieselIcon}</div>
-        <div class="fuel-price">${dieselPrice}</div>
+        <div class="fuel-details-container" id="diesel-container">
+            <img class="fuel-type-icon"src="./images/icons/diesel-white.svg" alt="Diesel Icon"> 
+            <span class="fuel-title">Diesel:</span> 
+            <div class="fuel-icon">${dieselIcon}</div>
+            <div class="fuel-price">${dieselPrice}</div>
+        </div>
 
-        <div class="fuel-title">Gas:</div>
-        <div class="fuel-icon">${gasIcon}</div>
-        <div class="fuel-price1">${gasPremiumPrice}</div>
-        <div class="fuel-price2">${gasSuperPrice}</div>
-        <div class="fuel-price3">${gasRegularPrice}</div>
+        <div class="fuel-details-container" id="gas-container">
+            <img class="fuel-type-icon"src="./images/icons/gas-white.svg" alt="Gas Icon"> 
+            <span class="fuel-title">Gas:</span> 
+            <div class="fuel-icon">${gasIcon}</div>
+            <div class="fuel-price1">${gasPremiumPrice}</div>
+            <div class="fuel-price2">${gasSuperPrice}</div>
+            <div class="fuel-price3">${gasRegularPrice}</div>
+        </div>
 
-        <div class="fuel-title">Propane:</div>
-        <div class="fuel-icon">${propaneIcon}</div>
-        <div class="fuel-price">${propanePrice}</div>
+        <div class="fuel-details-container" id="propane-container">
+            <img class="fuel-type-icon"src="./images/icons/propane-white.svg" alt="Propane Icon"> 
+            <span class="fuel-title">Propane:</span> 
+            <div class="fuel-icon">${propaneIcon}</div>
+            <div class="fuel-price">${propanePrice}</div>
+        </div>
 
         <div class="fuel-gap"></div>
     </div>
     `;
-    return fuelElements;
+    return marinaDetailsFuel;
 }
 function location(marina){
 
