@@ -132,7 +132,7 @@ function buildImages(marina){
     if(marina.images.data.length >0){
         marina.images.data.forEach(element => {
             if (element.full_url){
-                imgElements = imgElements + `<div class="slide"><img src="${element.full_url}" alt="Image of ${name}"></div>`
+                imgElements = imgElements + `<div class="slide"><img class="marina-img" src="${element.full_url}" alt="Image of ${name}"></div>`
             }
         });
         let marinaDetailsImgContainer = `
@@ -195,70 +195,6 @@ function createStarImage(isFull, isHalf) {
         return "<img src='./images/icons/no-star.png'>";
     }
 }
-//function buildFuel(marina){
-//    let marinaDetailsFuel = "";
-//    const dieselPrice = fixPrice(marina.fuel.diesel_price);
-//    const gasPremiumPrice = fixPrice(marina.fuel.gas_premium_price);
-//    const gasRegularPrice = fixPrice(marina.fuel.gas_regular_price);
-//    const gasSuperPrice = fixPrice(marina.fuel.gas_super_price);
-//    const propanePrice =fixPrice(marina.fuel.propane_price);
-
-//    const hasDiesel = marina.fuel.has_diesel;
-//    const hasGas = marina.fuel.has_gas;
-//    const hasPropane = marina.fuel.has_propane;
-
-//    const dieselIcon = hasOrNot(hasDiesel);
-//    const gasIcon = hasOrNot(hasGas);
-//    const propaneIcon = hasOrNot(hasPropane);
-
-//    function hasOrNot(item){
-//        console.log(item)
-//        if (item){
-//            return `<img src="./images/icons/green_check.svg" alt="">`;
-//        }else{
-//            return `<img src="./images/icons/red_x.svg" alt="">`;
-//        }
-//    }
-
-//    function fixPrice(price){
-//        if (price!=='null'){
-//            return (price / 10000).toFixed(2);
-//        }
-//    }
-
-//    marinaDetailsFuel = `
-//    <div id="fuel-container" class="grid-container">
-
-//        <div class="fuel-details-container" id="diesel-container">
-//            <img class="fuel-type-icon"src="./images/icons/diesel-white.svg" alt="Diesel Icon"> 
-//            <span class="fuel-title">Diesel:</span> 
-//            <div class="fuel-icon">${dieselIcon}</div>
-//            <div class="fuel-price">${dieselPrice}</div>
-//        </div>
-
-//        <div class="fuel-details-container" id="gas-container">
-//            <img class="fuel-type-icon"src="./images/icons/gas-white.svg" alt="Gas Icon"> 
-//            <span class="fuel-title">Gas:</span> 
-//            <div class="fuel-icon">${gasIcon}</div>
-//            <div class="fuel-price1">${gasPremiumPrice}</div>
-//            <div class="fuel-price2">${gasSuperPrice}</div>
-//            <div class="fuel-price3">${gasRegularPrice}</div>
-//        </div>
-
-//        <div class="fuel-details-container" id="propane-container">
-//            <img class="fuel-type-icon"src="./images/icons/propane-white.svg" alt="Propane Icon"> 
-//            <span class="fuel-title">Propane:</span> 
-//            <div class="fuel-icon">${propaneIcon}</div>
-//            <div class="fuel-price">${propanePrice}</div>
-//        </div>
-
-//        <div class="fuel-gap"></div>
-//    </div>
-//    `;
-//    return marinaDetailsFuel;
-//}
-
-
 function buildFuel(marina){
 let marinaDetailsFuel = "";
 const dieselPrice = fixFormat(fixPrice(marina.fuel.diesel_price),'Diesel');

@@ -280,6 +280,12 @@ footer{
     width: 90%;
     margin: 0 auto;
 }
+.marina-img{
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    /*overflow: hidden;*/
+}
 .carousel{
     display: flex;
     transition: .3s ease;
@@ -398,10 +404,12 @@ footer{
     text-decoration: none;
     color: var(--light-color);
 }*/
-#rating-container{
+#marinaDetailsRatings{
     display: flex;
     gap: 1rem;
     margin: 1rem auto 1rem 0;
+    width: 90%;
+    margin: 0 auto;
 }
 #rating-count{
     color: var(--light-color);
