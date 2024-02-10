@@ -82,6 +82,11 @@ searchInput.addEventListener('keydown', async(event) => {
         search(searchInput)
     }
 })
+window.addEventListener('load', function() {
+    if (searchInput.value !== '') {
+        search(); 
+    }
+});
 async function search() {
     if (searchInput.value != "") {
         if (mapElement.classList.contains('hidden')) {

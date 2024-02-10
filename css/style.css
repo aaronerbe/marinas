@@ -473,7 +473,23 @@ footer{
 }
 */
 
-
+.fuel-details-container {
+    position: relative; 
+}
+.fuel-price {
+    display: none;
+    position: absolute;
+    left: 18%;
+    background: var(--light-color);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+    color: var(--primary-color);
+}
+.fuel-details-container:hover .fuel-price {
+    display: block; 
+}
 
 
 

@@ -195,21 +195,86 @@ function createStarImage(isFull, isHalf) {
         return "<img src='./images/icons/no-star.png'>";
     }
 }
+//function buildFuel(marina){
+//    let marinaDetailsFuel = "";
+//    const dieselPrice = fixPrice(marina.fuel.diesel_price);
+//    const gasPremiumPrice = fixPrice(marina.fuel.gas_premium_price);
+//    const gasRegularPrice = fixPrice(marina.fuel.gas_regular_price);
+//    const gasSuperPrice = fixPrice(marina.fuel.gas_super_price);
+//    const propanePrice =fixPrice(marina.fuel.propane_price);
+
+//    const hasDiesel = marina.fuel.has_diesel;
+//    const hasGas = marina.fuel.has_gas;
+//    const hasPropane = marina.fuel.has_propane;
+
+//    const dieselIcon = hasOrNot(hasDiesel);
+//    const gasIcon = hasOrNot(hasGas);
+//    const propaneIcon = hasOrNot(hasPropane);
+
+//    function hasOrNot(item){
+//        console.log(item)
+//        if (item){
+//            return `<img src="./images/icons/green_check.svg" alt="">`;
+//        }else{
+//            return `<img src="./images/icons/red_x.svg" alt="">`;
+//        }
+//    }
+
+//    function fixPrice(price){
+//        if (price!=='null'){
+//            return (price / 10000).toFixed(2);
+//        }
+//    }
+
+//    marinaDetailsFuel = `
+//    <div id="fuel-container" class="grid-container">
+
+//        <div class="fuel-details-container" id="diesel-container">
+//            <img class="fuel-type-icon"src="./images/icons/diesel-white.svg" alt="Diesel Icon"> 
+//            <span class="fuel-title">Diesel:</span> 
+//            <div class="fuel-icon">${dieselIcon}</div>
+//            <div class="fuel-price">${dieselPrice}</div>
+//        </div>
+
+//        <div class="fuel-details-container" id="gas-container">
+//            <img class="fuel-type-icon"src="./images/icons/gas-white.svg" alt="Gas Icon"> 
+//            <span class="fuel-title">Gas:</span> 
+//            <div class="fuel-icon">${gasIcon}</div>
+//            <div class="fuel-price1">${gasPremiumPrice}</div>
+//            <div class="fuel-price2">${gasSuperPrice}</div>
+//            <div class="fuel-price3">${gasRegularPrice}</div>
+//        </div>
+
+//        <div class="fuel-details-container" id="propane-container">
+//            <img class="fuel-type-icon"src="./images/icons/propane-white.svg" alt="Propane Icon"> 
+//            <span class="fuel-title">Propane:</span> 
+//            <div class="fuel-icon">${propaneIcon}</div>
+//            <div class="fuel-price">${propanePrice}</div>
+//        </div>
+
+//        <div class="fuel-gap"></div>
+//    </div>
+//    `;
+//    return marinaDetailsFuel;
+//}
+
+
 function buildFuel(marina){
-    let marinaDetailsFuel = "";
-    const dieselPrice = marina.fuel.diesel_price;
-    const gasPremiumPrice = marina.fuel.gas_premium_price;
-    const gasRegularPrice = marina.fuel.gas_regular_price;
-    const gasSuperPrice = marina.fuel.gas_super_price;
-    const propanePrice = marina.fuel.propane_price;
+let marinaDetailsFuel = "";
+const dieselPrice = fixFormat(fixPrice(marina.fuel.diesel_price),'Diesel');
+const gasPremiumPrice = fixFormat(fixPrice(marina.fuel.gas_premium_price), 'Premium');
+const gasRegularPrice = fixFormat(fixPrice(marina.fuel.gas_regular_price), 'Regular');
+const gasSuperPrice = fixFormat(fixPrice(marina.fuel.gas_super_price), 'Super');
+const propanePrice = fixFormat(fixPrice(marina.fuel.propane_price), 'Propane');
 
-    const hasDiesel = marina.fuel.has_diesel;
-    const hasGas = marina.fuel.has_gas;
-    const hasPropane = marina.fuel.has_propane;
+const hasDiesel = marina.fuel.has_diesel;
+const hasGas = marina.fuel.has_gas;
+const hasPropane = marina.fuel.has_propane;
 
-    const dieselIcon = hasOrNot(hasDiesel);
-    const gasIcon = hasOrNot(hasGas);
-    const propaneIcon = hasOrNot(hasPropane);
+const dieselIcon = hasOrNot(hasDiesel);
+const gasIcon = hasOrNot(hasGas);
+const propaneIcon = hasOrNot(hasPropane);
+
 
     function hasOrNot(item){
         console.log(item)
@@ -219,38 +284,54 @@ function buildFuel(marina){
             return `<img src="./images/icons/red_x.svg" alt="">`;
         }
     }
-    marinaDetailsFuel = `
 
-    <div id="fuel-container" class="grid-container">
+    function fixPrice(price) {
+        if (price !== 'null') {
+            const formattedPrice = (price / 10000).toFixed(2);
+            return formattedPrice > 0.00 ? formattedPrice : '';
+        }
+        return '';
+    }
+    function fixFormat(input, type){
+        if (input && input>0 & input !== null){
+            input = `${type}: $${input}`;
+        }
+        return input;
+    }
 
-        <div class="fuel-details-container" id="diesel-container">
-            <img class="fuel-type-icon"src="./images/icons/diesel-white.svg" alt="Diesel Icon"> 
-            <span class="fuel-title">Diesel:</span> 
-            <div class="fuel-icon">${dieselIcon}</div>
-            <div class="fuel-price">${dieselPrice}</div>
-        </div>
-
-        <div class="fuel-details-container" id="gas-container">
-            <img class="fuel-type-icon"src="./images/icons/gas-white.svg" alt="Gas Icon"> 
-            <span class="fuel-title">Gas:</span> 
-            <div class="fuel-icon">${gasIcon}</div>
-            <div class="fuel-price1">${gasPremiumPrice}</div>
-            <div class="fuel-price2">${gasSuperPrice}</div>
-            <div class="fuel-price3">${gasRegularPrice}</div>
-        </div>
-
-        <div class="fuel-details-container" id="propane-container">
-            <img class="fuel-type-icon"src="./images/icons/propane-white.svg" alt="Propane Icon"> 
-            <span class="fuel-title">Propane:</span> 
-            <div class="fuel-icon">${propaneIcon}</div>
-            <div class="fuel-price">${propanePrice}</div>
-        </div>
-
-        <div class="fuel-gap"></div>
+marinaDetailsFuel = `
+<div id="fuel-container" class="grid-container">
+    <div class="fuel-details-container" id="diesel-container">
+        <img class="fuel-type-icon" src="./images/icons/diesel-white.svg" alt="Diesel Icon">
+        <span class="fuel-title">Diesel:</span>
+        <div class="fuel-icon">${dieselIcon} </div>
+        <div class="price ${dieselPrice !== '' ? 'fuel-price' : ''} "> ${dieselPrice}</div>
     </div>
-    `;
-    return marinaDetailsFuel;
+
+    <div class="fuel-details-container" id="gas-container">
+        <img class="fuel-type-icon" src="./images/icons/gas-white.svg" alt="Gas Icon">
+        <span class="fuel-title">Gas:</span>
+        <div class="fuel-icon">${gasIcon}</div>
+        <div class="price ${gasPremiumPrice !== '' || gasSuperPrice !== '' || gasRegularPrice !== '' ? 'fuel-price' : ''}">
+            <div>${gasPremiumPrice}</div>
+            <div>${gasSuperPrice}</div>
+            <div>${gasRegularPrice}</div>
+        </div>
+    </div>
+
+    <div class="fuel-details-container" id="propane-container">
+        <img class="fuel-type-icon" src="./images/icons/propane-white.svg" alt="Propane Icon">
+        <span class="fuel-title">Propane:</span>
+        <div class="fuel-icon">${propaneIcon}</div>
+        <div class="price ${propanePrice !== '' ? 'fuel-price' : ''}">${propanePrice}</div>
+    </div>
+
+    <div class="fuel-gap"></div>
+</div>
+`;
+return marinaDetailsFuel;
 }
+
 function location(marina){
 
 }
