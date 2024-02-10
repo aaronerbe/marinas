@@ -211,11 +211,14 @@ function createStarImage(isFull, isHalf) {
 }
 function buildFuel(marina){
 let marinaDetailsFuel = "";
-const dieselPrice = fixFormat(fixPrice(marina.fuel.diesel_price),'Diesel');
-const gasPremiumPrice = fixFormat(fixPrice(marina.fuel.gas_premium_price), 'Premium');
-const gasRegularPrice = fixFormat(fixPrice(marina.fuel.gas_regular_price), 'Regular');
-const gasSuperPrice = fixFormat(fixPrice(marina.fuel.gas_super_price), 'Super');
-const propanePrice = fixFormat(fixPrice(marina.fuel.propane_price), 'Propane');
+//const dieselPrice = fixFormat(fixPrice(marina.fuel.diesel_price),'Diesel');
+const dieselPrice = fixFormat(fixPrice(marina.fuel.diesel_price),'');
+const gasPremiumPrice = fixFormat(fixPrice(marina.fuel.gas_premium_price), 'Premium:');
+const gasRegularPrice = fixFormat(fixPrice(marina.fuel.gas_regular_price), 'Regular:');
+const gasSuperPrice = fixFormat(fixPrice(marina.fuel.gas_super_price), 'Super:');
+const propanePrice = fixFormat(fixPrice(marina.fuel.propane_price), '');
+
+const gasPrice = fixGas([gasPremiumPrice, gasSuperPrice, gasRegularPrice]);
 
 const hasDiesel = marina.fuel.has_diesel;
 const hasGas = marina.fuel.has_gas;
@@ -225,7 +228,6 @@ const dieselIcon = hasOrNot(hasDiesel);
 const gasIcon = hasOrNot(hasGas);
 const propaneIcon = hasOrNot(hasPropane);
 
-
     function hasOrNot(item){
         console.log(item)
         if (item){
@@ -234,7 +236,6 @@ const propaneIcon = hasOrNot(hasPropane);
             return `<img src="./images/icons/red_x.svg" alt="">`;
         }
     }
-
     function fixPrice(price) {
         if (price !== 'null') {
             const formattedPrice = (price / 10000).toFixed(2);
@@ -244,9 +245,19 @@ const propaneIcon = hasOrNot(hasPropane);
     }
     function fixFormat(input, type){
         if (input && input>0 & input !== null){
-            input = `${type}: $${input}`;
+            input = `${type} $${input}`;
+            return input;
         }
-        return input;
+        return "";
+    }
+    function fixGas(array){
+        let final = "";
+        array.forEach(element => {
+            if (element !==""){
+                final += element
+            }
+        });
+        return final;
     }
 
 marinaDetailsFuel = `
@@ -254,18 +265,18 @@ marinaDetailsFuel = `
     <div class="fuel-details-container" id="diesel-container">
         <img class="fuel-type-icon" src="./images/icons/diesel-white.svg" alt="Diesel Icon">
         <span class="fuel-title">Diesel:</span>
-        <div class="fuel-icon">${dieselIcon} </div>
-        <div class="price ${dieselPrice !== '' ? 'fuel-price' : ''} "> ${dieselPrice}</div>
+        <div class="fuel-icon">${dieselIcon} 
+            <div class="price ${dieselPrice !== '' ? 'fuel-price' : ''} "> ${dieselPrice}</div>
+        </div>
     </div>
 
     <div class="fuel-details-container" id="gas-container">
         <img class="fuel-type-icon" src="./images/icons/gas-white.svg" alt="Gas Icon">
         <span class="fuel-title">Gas:</span>
-        <div class="fuel-icon">${gasIcon}</div>
-        <div class="price ${gasPremiumPrice !== '' || gasSuperPrice !== '' || gasRegularPrice !== '' ? 'fuel-price' : ''}">
-            <div>${gasPremiumPrice}</div>
-            <div>${gasSuperPrice}</div>
-            <div>${gasRegularPrice}</div>
+        <div class="fuel-icon">${gasIcon}
+            <div class="price ${gasPremiumPrice !== '' || gasSuperPrice !== '' || gasRegularPrice !== '' ? 'fuel-price' : ''}">
+                <div>${gasPrice}</div>
+            </div>
         </div>
     </div>
 

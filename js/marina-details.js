@@ -1,6 +1,8 @@
 import Marina from "./Marinas.mjs";
 import { getParams, loadHeaderFooter } from "./utils.mjs";
 import Map from "./Map.mjs";
+import WebCams from "./WebCams.mjs";
+
 /*
 ░█░░░█▀█░█▀█░█▀▄░░░█░█░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█░█▀▀░█▀█░█▀█░▀█▀░█▀▀░█▀▄
 ░█░░░█░█░█▀█░█░█░░░█▀█░█▀▀░█▀█░█░█░█▀▀░█▀▄░▄▀░░█▀▀░█░█░█░█░░█░░█▀▀░█▀▄
@@ -27,7 +29,15 @@ const lat = marina.data.location.lat;
 const lon = marina.data.location.lon;
 //map object
 const map = new Map()
-map.init(lat, lon, marina, "DETAIL");
+//map.init(lat, lon, marina, "DETAIL");
+
+
+
+//TEST WEBCAMS
+const webcams = new WebCams(lat, lon)
+await webcams.init();
+
+
 
 /* 
 ░█▀▀░█▀█░█▀▄░█▀█░█░█░█▀▀░█▀▀░█░░░░░█░█░█▀█░█▀█░█▀▄░█░░░█▀▀░█▀▄
