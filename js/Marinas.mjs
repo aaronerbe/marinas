@@ -93,34 +93,38 @@ function marinaDetailsTemplate(marina) {
     return`
         <h1 id="marina-name">${marina.name}</h1>            
         <div id="marina-details-card1">
-        <!-- #marinaDetailsImgContainer -->
+            <!-- #marinaDetailsImgContainer -->
+            
+            ${marinaDetailsImgContainer}
+            <!-- #marinaDetailsRatings -->
+                <!-- #rating-count -->
+                <!-- #stars -->
+            ${marinaDetailsRatings}
+            <div id='services' class="">
+            <h2 class="marinaDetails-services-title divider">Services & Amenities</h2>
+                <!--#fuel-container .grid-container  -->
+                        <!-- #fuel-title-header  -->
+                        <!-- #fuel-icon-header  -->
+                        <!-- #fuel-price-header -->
         
-        ${marinaDetailsImgContainer}
-        <!-- #marinaDetailsRatings -->
-            <!-- #rating-count -->
-            <!-- #stars -->
-        ${marinaDetailsRatings}
-        <div id='services' class="">
-            <h2 id='marinaDetails-services-title' class="divider">Services & Amenities</h2>
-            <!--#fuel-container .grid-container  -->
-                    <!-- #fuel-title-header  -->
-                    <!-- #fuel-icon-header  -->
-                    <!-- #fuel-price-header -->
-
-                    <!-- .fuel-title -->
-                        <!-- <img> -->    
-                        <!-- #fuel-title-desc -->
-                        <!-- .fuel-icon -->
-                    <!-- .fuel-price(1) -->
-                    <!-- .fuel-price2 -->
-                    <!-- .fuel-price3 -->
-
-                    <!-- .fuel-gap -->
-                ${marinaDetailsFuel}
-        </div>
-        <div id="marina-details-card2">
+                        <!-- .fuel-title -->
+                            <!-- <img> -->    
+                            <!-- #fuel-title-desc -->
+                            <!-- .fuel-icon -->
+                        <!-- .fuel-price(1) -->
+                        <!-- .fuel-price2 -->
+                        <!-- .fuel-price3 -->
+        
+                        <!-- .fuel-gap -->
+                    ${marinaDetailsFuel}
+            </div>
+            </div>
+            <div id="marina-details-card2">
             <div id="windy" class="divider details-windy"></div>
-            <div id="marinaDetailsLocation">Coords, Address, What3Words</div>
+            <div id='locations' class="">
+                <h2 class="marinaDetails-services-title divider">Location Info</h2>
+                <div id="marinaDetailsLocation">Coords, Address, What3Words</div>
+            </div>
         </div>
     `;
 }
@@ -132,7 +136,10 @@ function buildImages(marina){
     if(marina.images.data.length >0){
         marina.images.data.forEach(element => {
             if (element.full_url){
-                imgElements = imgElements + `<div class="slide"><img class="marina-img" src="${element.full_url}" alt="Image of ${name}"></div>`
+                imgElements = imgElements + `
+                    <div class="slide">
+                        <img class="marina-img" src="${element.full_url}" alt="Image of ${name}">
+                    </div>`
             }
         });
         let marinaDetailsImgContainer = `
@@ -179,10 +186,17 @@ function buildRatings(marina) {
         star5 = createStarImage(fullStars >= 5, hasHalfStar && fullStars === 4);
 
         // Create the rating count container
-        const countContainer = `<div id='count-container'><div id='rating-count'>${ratingCount} Reviews</div></div>`;
+        const countContainer = `
+            <div id='count-container'>
+                <div id='rating-count'>${ratingCount} Reviews</div>
+            </div>`;
         // Create the star container
-        const starContainer = `<div id='star-container'><div id='stars'>${star1}${star2}${star3}${star4}${star5}</div></div>`;
-        marinaDetailsRatings = `<div id='marinaDetailsRatings'> ${starContainer} ${countContainer} </div>`
+        const starContainer = `
+            <div id='star-container'>
+                <div id='stars'>${star1}${star2}${star3}${star4}${star5}</div>
+            </div>`;
+        marinaDetailsRatings = `
+            <div id='marinaDetailsRatings'> ${starContainer} ${countContainer} </div>`
     }
     return marinaDetailsRatings;
 }
@@ -261,8 +275,6 @@ marinaDetailsFuel = `
         <div class="fuel-icon">${propaneIcon}</div>
         <div class="price ${propanePrice !== '' ? 'fuel-price' : ''}">${propanePrice}</div>
     </div>
-
-    <div class="fuel-gap"></div>
 </div>
 `;
 return marinaDetailsFuel;

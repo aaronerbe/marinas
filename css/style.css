@@ -262,7 +262,10 @@ footer{
 
 #marina-details{
     width: 90%;
-    margin: 0 auto;
+    margin: 4rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 #marina-details-card1{
     background-color: var(--primary-color);
@@ -272,6 +275,7 @@ footer{
     gap: 1rem;
     padding-top: 5%;
 }
+
 
 
 #marinaDetailsImgContainer{
@@ -320,7 +324,7 @@ footer{
 .next-btn{
     right: 0;
 }
-#services{
+#services, #locations{
     color: var(--light-color);
     width: 90%;
     margin: 0 auto;
@@ -346,64 +350,6 @@ footer{
 .fuel-icon img{
     width: .75rem;
 }
-
-
-/*#marina-details-body{
-    position: relative;
-}
-#marina-details-main{
-    padding-top: 3rem;
-}
-#marina-name{
-    position: absolute;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    color: var(--primary-color);
-    font-family: var(--font-sans);
-    font-size: larger;
-    width: 100%;
-}
-#marina-details-container{
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    width: 80%;
-    justify-content: center;
-    align-items: center;
-    margin: 3rem auto;
-    background-color: var(--primary-color);
-}
-#windy.details-windy{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 2rem auto 0 auto;
-    padding: 0;
-    width: 90%;
-    aspect-ratio: 16 / 9; 
-    height: calc(90vw * (9 / 16));
-}
-#marina-image-container img{
-    width: auto;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-}
-#marina-details{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-}
-#marina-url{
-    text-decoration: none;
-    color: var(--light-color);
-}*/
 #marinaDetailsRatings{
     display: flex;
     gap: 1rem;
@@ -422,64 +368,6 @@ footer{
     width: 1rem;
     height: auto;
 }
-/*#fuel-container *{
-    color: var(--light-color);
-    text-align: left;
-    font-size: 1rem;
-}
-#fuel-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 10px 1fr 1fr 1fr;
-}
-#fuel-title-header{
-    grid-column: 1/2;
-    grid-row: 1;
-    border-bottom: 1px solid var(--highlight-color);
-    width: 100%;
-}
-#fuel-icon-header{
-    grid-column: 2/3;
-    grid-row: 1;
-    border-bottom: 1px solid var(--highlight-color);
-    width: 100%;
-    text-align: center;
-}
-#fuel-price-header{
-    grid-column: 3/7;
-    grid-row: 1;
-    border-bottom: 1px solid var(--highlight-color);
-    width: 100%;
-    text-align: center;
-}
-.fuel-title{
-    grid-column: 1/2;
-}
-.fuel-icon{
-    grid-column: 2/3;
-    margin: 0 auto;
-}
-
-.fuel-gap{
-    grid-column: 3/4;
-    grid-row: 2/5;
-    border-left: 1px solid var(--highlight-color);
-}
-.fuel-price{
-    grid-column: 4/7;
-}
-.fuel-price1{
-    grid-column: 4/5;
-    grid-row: 3;
-}
-.fuel-price2 {
-    grid-column: 5/6;
-    grid-row: 3; 
-}
-.fuel-price3 {
-    grid-column: 6/7;
-    grid-row: 3; 
-}
-*/
 
 .fuel-details-container {
     position: relative; 
@@ -499,9 +387,22 @@ footer{
     display: block; 
 }
 
+#marina-details-card2{
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 5% 0 5% 0;
+}
+#marina-details-card2 #windy{
+    width: 90%;
+    margin: 0 auto;
+}
 
 
-@media screen and (min-width: 500px) {
+
+@media screen and (min-width: 800px) {
     body {
         max-width: 1080px;
         margin: auto;
@@ -524,8 +425,24 @@ footer{
         overflow: hidden;
         /*z-index: 101;*/
     }
-    #windy.details-windy{
-        /*height: 50vh;*/
+    #marina-details{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 2rem;
+        margin: 4rem auto;
+    }
+    #marina-name{
+        grid-column: 1/-1;
+    }
+    #marina-details-card1{
+        grid-column: 1/2;
+    }
+    #marina-details-card2{
+        grid-column: 2/3;
+    }
+    #marina-details-card2 #windy{
+        height: 100%;
     }
 }
 @media screen and (max-width: 500px) {
