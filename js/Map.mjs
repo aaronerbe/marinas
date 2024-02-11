@@ -51,6 +51,7 @@ export default class Map{
         }else{
             this.buildWebCamMarkers(map);
         }
+        
     }
     buildClusterMarkers(map){
         // Create a marker cluster group
@@ -91,7 +92,8 @@ export default class Map{
             console.log('inside object statement',webCam)
             const lat = webCam.location.latitude;
             const lon = webCam.location.longitude;
-            const webCamImgURL = webCam.images.current.icon;
+            //const webCamImgURL = webCam.images.current.thumbnail;
+            const webCamImgURL = webCam.images.daylight.preview;
             const name = webCam.title;
             const webCamPlayer = webCam.player.day;
             //add POI Marker for each webcam
@@ -106,7 +108,7 @@ export default class Map{
             iconSize: iconSize,
             iconAnchor: [15, 30],
         });
-
+        //if an img has been provided, build the template, else leave blank
         if (img!==""){
             img = `<img id='popupImg' src="${img}" alt=${name}>`
         }
@@ -120,6 +122,8 @@ export default class Map{
             </div>
         `).openPopup();
         marker.on('popupopen', () => {
+            //zoom and center to the marker when you click on it
+            map.setView([lat, lon], 14)
             const popupContent = document.getElementById('popupContent');
             if (link!==""){
                 const popupName = document.getElementById('popupName');
@@ -174,10 +178,13 @@ export default class Map{
                 topLayer.setOpacity('0');
             }
         });
+        //set the default zoom level depending on what map were looking at
         if (this.type === 'search'){
-            map.setZoom(11);
+            //map.setZoom(11);
+            map.setView([this.lat, this.lon], 11)
         }else{
-            map.setZoom(15)
+            //map.setZoom(15)
+            map.setView([this.lat, this.lon], 15)
         }
         //Adds the openstreetmap layer (hack to fix zoom limitation)
         map.addLayer(topLayer);

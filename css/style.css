@@ -222,10 +222,6 @@ button:active:not(.prev-btn, .next-btn) {
     top: calc(100% + 1rem)
 }
 
-
-
-
-
 /* WINDY  STYLE*/
 #windy {
     width: 100%;
@@ -233,6 +229,20 @@ button:active:not(.prev-btn, .next-btn) {
     margin: 0;
     padding: 0;
     /*height: auto;*/
+}
+#popupContent{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(10px);
+}
+#popupImg{
+    margin: 0 auto;
+}
+#popupName{
+    margin: .5rem auto;
 }
 /*#zoom{
     position: absolute;

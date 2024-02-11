@@ -30,7 +30,6 @@ const lon = marina.data.location.lon;
 //webcam object
 const webCams = new WebCams(lat, lon)
 await webCams.init();
-console.log(typeof(webCams))
 //map object
 const map = new Map()
 map.init(lat, lon, marina, webCams, "DETAIL");
