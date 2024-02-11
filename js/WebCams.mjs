@@ -33,6 +33,6 @@ export default class WebCams {
     */
     /* Build the base URL with access token as a query parameter */
     buildBaseURL() {
-        return `https://api.windy.com/webcams/api/v3/webcams?offset=0&categoryOperation=or&nearby=${this.lat}%2C${this.lon}%2C100&include=categories,images,location,player,urls&categories=water,island,beach,harbor,bay,coast,underwater`;
+        return `https://api.windy.com/webcams/api/v3/webcams?offset=0&categoryOperation=or&nearby=${this.lat}%2C${this.lon}%2C250&include=categories,images,location,player,urls&categories=water,island,beach,harbor,bay,coast,underwater,mountain,park,sportarea`;
     }
 }
