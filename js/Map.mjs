@@ -184,7 +184,7 @@ export default class Map{
             map.setView([this.lat, this.lon], 11)
         }else{
             //map.setZoom(15)
-            map.setView([this.lat, this.lon], 15)
+            map.setView([this.lat, this.lon], 12)
         }
         //Adds the openstreetmap layer (hack to fix zoom limitation)
         map.addLayer(topLayer);

@@ -357,9 +357,39 @@ footer{
 .fuel-title{
     margin: auto 0 0 0;
 }
-.fuel-icon img{
-    width: .75rem;
+.fuel-icon-img{
+    width: 1rem;
+    margin: auto 0 0 0;
+    align-self: baseline;
 }
+.fuel-icon-img:hover{
+    transform: scale(1.25);
+}
+/*.fuel-details-container {*/
+.fuel-icon{
+    position: relative; 
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: baseline;
+    padding-bottom: 2.5px;
+}
+.fuel-price {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 10%;
+    padding: 5px;
+    border-radius: 5px;
+    background: var(--light-color);
+    border: 1px solid var(--highlight-color);
+    color: var(--primary-color);
+}
+.fuel-details-container:hover .fuel-price {
+    display: block; 
+}
+
 #marinaDetailsRatings{
     display: flex;
     gap: 1rem;
@@ -379,27 +409,6 @@ footer{
     height: auto;
 }
 
-/*.fuel-details-container {*/
-.fuel-icon{
-    position: relative; 
-    width: 100%;
-}
-.fuel-price {
-    display: none;
-    position: absolute;
-    z-index: 1;
-    bottom: 0;
-    left: 10%;
-    padding: 5px;
-    border-radius: 5px;
-    background: var(--light-color);
-    border: 1px solid var(--highlight-color);
-    color: var(--primary-color);
-}
-.fuel-details-container:hover .fuel-price {
-    display: block; 
-}
-
 #marina-details-card2{
     background-color: var(--secondary-color);
     display: flex;
@@ -417,7 +426,7 @@ footer{
 
 @media screen and (min-width: 800px) {
     body {
-        max-width: 1080px;
+        max-width: 70%;
         margin: auto;
     }
     #search-container{
@@ -443,10 +452,13 @@ footer{
         grid-template-columns: 1fr 1fr;
         width: 100%;
         gap: 2rem;
-        margin: 4rem auto;
+        margin: 2rem auto 4rem auto;
+        padding-bottom: 4rem;
     }
     #marina-name{
         grid-column: 1/-1;
+        padding: 0;
+        margin: 0;
     }
     #marina-details-card1{
         grid-column: 1/2;

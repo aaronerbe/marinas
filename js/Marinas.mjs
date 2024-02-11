@@ -150,6 +150,9 @@ function buildImages(marina){
             </div>
         `;
         return marinaDetailsImgContainer;
+    }else{
+        //return nothing if there's no images
+        return "";
     }
 }
 function buildWebURL(marina){
@@ -231,9 +234,9 @@ const propaneIcon = hasOrNot(hasPropane);
     function hasOrNot(item){
         console.log(item)
         if (item){
-            return `<img src="./images/icons/green_check.svg" alt="">`;
+            return `<img class = "fuel-icon-img" src="./images/icons/green_check.svg" alt="">`;
         }else{
-            return `<img src="./images/icons/red_x.svg" alt="">`;
+            return `<img class = "fuel-icon-img" src="./images/icons/red_x.svg" alt="">`;
         }
     }
     function fixPrice(price) {
