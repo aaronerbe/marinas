@@ -440,9 +440,11 @@ footer{
     }
     #marina-details-card1{
         grid-column: 1/2;
+        justify-content: space-between;
     }
     #marina-details-card2{
         grid-column: 2/3;
+        min-height: 800px;
     }
     #marina-details-card2 #windy{
         height: 100%;

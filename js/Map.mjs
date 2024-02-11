@@ -4,19 +4,22 @@ export default class Map{
     constructor(){
         this.lat = "";
         this.lon = "";
-        this.marinas = "";
+        this.marinas = {};
+        this.webCams={};
         this.type = "";
         this.name = ""
         this.key = 'qrQODxrOJqHA9Xn70LbOLmFhIVEEWg4h';
-        this.icon = './images/icons/map-home.png';
+        this.marinaIcon = './images/icons/map-home.png';
+        this.cameraIcon = './images/icons/camera_pin.svg';
         this.windyAPI
     }
-
-    async init(lat, lon, marinas, type){
+    async init(lat, lon, marinas, webCams, type){
         this.lat = lat;
         this.lon = lon;
         this.marinas = marinas;
-        this.type = type.toLowerCase();
+        this.type = type
+        this.type = this.type.toLowerCase();
+        this.webCams = webCams
         await this.getName()
         this.getHomeOrMarinaIcon()
         if (this.windyAPI){
@@ -39,34 +42,15 @@ export default class Map{
         return options;
     }
     renderMap(){
-        const {map} = this.windyAPI;        
-        this.buildHyperZoom(map)
-        this.buildPOIMarker(map);
+        const {map} = this.windyAPI;
+        this.buildHyperZoom(map);
+        //build marker for the marina site OR the search Location
+        this.renderPOIMarker(map, this.lat, this.lon, this.marinaIcon, this.name, "", "")
         if (this.type === 'search'){
-            this.buildClusterMarkers(map)
+            this.buildClusterMarkers(map);
+        }else{
+            this.buildWebCamMarkers(map);
         }
-    }
-    buildPOIMarker(map){
-        //build POINT OF INTEREST Marker
-        //home or speciric marina
-        const iconSize = [30, 30];
-        const customIcon = L.icon({
-            iconUrl: this.icon,
-            iconSize: iconSize,
-            iconAnchor: [15, 30],
-        });
-        const marker = L.marker([this.lat, this.lon], {icon: customIcon});
-        marker.bindPopup(`<div id="popupContent"><span id="searchName">${this.name}</span></div>`).openPopup();
-        marker.on('popupopen', () => {
-            const popupContent = document.getElementById('popupContent');
-            const searchName = document.getElementById('searchName');
-            searchName.addEventListener('click', () => {
-                //window.location.href = `marina-details.html?marina=${id}`;
-            });
-        });
-        map.addLayer(marker);
-        // Center the map on the search location
-        map.setView([this.lat, this.lon], map.getZoom());
     }
     buildClusterMarkers(map){
         // Create a marker cluster group
@@ -96,6 +80,81 @@ export default class Map{
         });
         // Add the marker cluster group to the map
         map.addLayer(markerCluster);
+    }
+    buildWebCamMarkers(map){
+        // Create a marker cluster group
+        const webCamMarkerCluster = L.markerClusterGroup();
+        //iterate through the marina data and add a marker for each location
+        //data.data because it's double deep in the JSON
+        console.log('inside buildWebCamMarkers',this.webCams)
+        Object.values(this.webCams.data.webcams).forEach(webCam => {
+            console.log('inside object statement',webCam)
+            const lat = webCam.location.latitude;
+            const lon = webCam.location.longitude;
+            const webCamImgURL = webCam.images.current.icon;
+            const name = webCam.title;
+            const webCamPlayer = webCam.player.day;
+            //add POI Marker for each webcam
+            this.renderPOIMarker(map, lat, lon, this.cameraIcon, name,webCamPlayer,webCamImgURL)
+        });
+
+    }
+    renderPOIMarker(map, lat, lon, icon, name, link, img=""){
+        const iconSize = [30, 30];
+        const customIcon = L.icon({
+            iconUrl: icon,
+            iconSize: iconSize,
+            iconAnchor: [15, 30],
+        });
+
+        if (img!==""){
+            img = `<img id='popupImg' src="${img}" alt=${name}>`
+        }
+        const marker = L.marker([lat, lon], {icon: customIcon});
+        marker.bindPopup(`
+            <div id="popupContent">
+                <span id="popupName">${name}</span>
+                <div>
+                    ${img}
+                </div>
+            </div>
+        `).openPopup();
+        marker.on('popupopen', () => {
+            const popupContent = document.getElementById('popupContent');
+            if (link!==""){
+                const popupName = document.getElementById('popupName');
+                const popupImg = document.getElementById('popupImg');
+                //ADD A LINK TO THE NAME
+                popupName.addEventListener('click', () => {
+                    window.location.href = `${link}`;
+                });
+                // Add event listener for mouseenter event
+                popupName.addEventListener('mouseenter', () => {
+                    // Change the cursor to pointer
+                    popupName.style.cursor = 'pointer';
+                });
+                popupName.addEventListener('mouseleave', () => {
+                    // Change the cursor back to default
+                    popupName.style.cursor = 'default';
+                });
+                //ADD A LINK TO THE IMAGE
+                popupImg.addEventListener('click', () => {
+                    window.location.href = `${link}`;
+                });
+                // Add event listener for mouseenter event
+                popupImg.addEventListener('mouseenter', () => {
+                    // Change the cursor to pointer
+                    popupImg.style.cursor = 'pointer';
+                });
+
+                popupImg.addEventListener('mouseleave', () => {
+                    // Change the cursor back to default
+                    popupImg.style.cursor = 'default';
+                });
+                
+            }
+        });
+        map.addLayer(marker);
     }
     buildHyperZoom(map){
         // MAP HACK to fix zoom:
@@ -132,9 +191,10 @@ export default class Map{
         }
     }
     getHomeOrMarinaIcon(){
+        //uses pin for search (default) or extracts the image provided by marinas api for details page
         if (this.type != 'search'){
-            //this.icon = "";
-            this.icon = this.marinas.data.icon_url;
+            //this.marinaIcon = "";
+            this.marinaIcon = this.marinas.data.icon_url;
         }
     }
 }

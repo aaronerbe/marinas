@@ -17,3 +17,4 @@ right:  https://www.iconfinder.com/icons/326578/chevron_right_icon
 left:  https://www.iconfinder.com/icons/326575/chevron_left_icon
 circle right:  https://www.iconfinder.com/icons/8541708/chevron_circle_right_icon
 circle left:  https://www.iconfinder.com/icons/8541702/chevron_circle_left_icon
+map camera pin: https://www.iconfinder.com/icons/8684377/camera_photo_maps_location_placeholder_pin_icon

@@ -27,15 +27,16 @@ marina.renderMarinaDetails('marina-details');
 */
 const lat = marina.data.location.lat;
 const lon = marina.data.location.lon;
+//webcam object
+const webCams = new WebCams(lat, lon)
+await webCams.init();
+console.log(typeof(webCams))
 //map object
 const map = new Map()
-//map.init(lat, lon, marina, "DETAIL");
+map.init(lat, lon, marina, webCams, "DETAIL");
 
 
 
-//TEST WEBCAMS
-const webcams = new WebCams(lat, lon)
-await webcams.init();
 
 
 
