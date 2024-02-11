@@ -128,7 +128,8 @@ export default class Map{
                 const popupImg = document.getElementById('popupImg');
                 //ADD A LINK TO THE NAME
                 popupName.addEventListener('click', () => {
-                    window.location.href = `${link}`;
+                    //window.location.href = `${link}`;
+                    window.open(link, '_blank')
                 });
                 // Add event listener for mouseenter event
                 popupName.addEventListener('mouseenter', () => {
@@ -141,7 +142,8 @@ export default class Map{
                 });
                 //ADD A LINK TO THE IMAGE
                 popupImg.addEventListener('click', () => {
-                    window.location.href = `${link}`;
+                    //window.location.href = `${link}`;
+                    window.open(link, '_blank')
                 });
                 // Add event listener for mouseenter event
                 popupImg.addEventListener('mouseenter', () => {
