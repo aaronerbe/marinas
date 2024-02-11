@@ -17,7 +17,6 @@ export default class WebCams {
     */
     async fetchWebCamData() {
         let url = this.buildBaseURL();
-        console.log(url);
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -26,7 +25,6 @@ export default class WebCams {
             },
         });
         this.data = await response.json();
-        console.log('webcams:', this.data);
     }
     /* 
     ░█▀▄░█░█░▀█▀░█░░░█▀▄░░░█░█░█▀▄░█░░

@@ -1,5 +1,6 @@
 import { convertCoordToLocation } from "./utils.mjs";
 
+
 export default class Map{
     constructor(){
         this.lat = "";
@@ -86,10 +87,7 @@ export default class Map{
         // Create a marker cluster group
         const webCamMarkerCluster = L.markerClusterGroup();
         //iterate through the marina data and add a marker for each location
-        //data.data because it's double deep in the JSON
-        console.log('inside buildWebCamMarkers',this.webCams)
         Object.values(this.webCams.data.webcams).forEach(webCam => {
-            console.log('inside object statement',webCam)
             const lat = webCam.location.latitude;
             const lon = webCam.location.longitude;
             //const webCamImgURL = webCam.images.current.thumbnail;

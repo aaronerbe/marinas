@@ -1,3 +1,4 @@
+import { convertCoordToLocation } from "./utils.mjs";
 /* 
 ░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀▀░█░░░█▀█░█▀▀░█▀▀
 ░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█░░░█░░░█▀█░▀▀█░▀▀█
@@ -30,7 +31,6 @@ export default class Marina {
         else{
             url = this.buildBaseURL(this.lat, this.lon); // Pass this.accessToken
         }
-        console.log(url)
         const response = await fetch(url, {
         //const response = await fetch("https://api.marinas.com/v1/marinas/4qcq", {
             method: 'GET', // GET method doesn't have a body
@@ -64,18 +64,41 @@ export default class Marina {
     ░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄░░░█░█░█▀▀░░█░░█▀█░░█░░█░░░▀▀█
     ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░▀▀░░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀
     */
-    renderMarinaDetails(selector){
+    async renderMarinaDetails(selector){
         //method to generate HTML to display our product
         const element = document.getElementById(selector);
         element.insertAdjacentHTML(
             "afterBegin",
-            marinaDetailsTemplate(this.data)
+            await marinaDetailsTemplate(this.data)
         )
+        /* 
+        ░█▀▀░█▀█░█▀▄░█▀█░█░█░█▀▀░█▀▀░█░░░░░█░█░█▀█░█▀█░█▀▄░█░░░█▀▀░█▀▄
+        ░█░░░█▀█░█▀▄░█░█░█░█░▀▀█░█▀▀░█░░░░░█▀█░█▀█░█░█░█░█░█░░░█▀▀░█▀▄
+        ░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀░▀▀▀░▀░▀
+        */
+        //adding carousel functionality.  only add the buttons event listeners if they exist
+        const carousel = document.querySelector('.carousel');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        let currentIndex = 0;
+
+        //handle case when there are no buttons (becuase the marina has no images)
+        if(prevBtn && nextBtn){
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateCarousel();
+            });
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateCarousel();
+            });
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+        }
     } 
-    //todo bruild ratings
-    //function buildMarinaRatings{}
-    //todo build images
-    //todo build address to place below map
+
 }
 
 /*
@@ -83,12 +106,12 @@ export default class Marina {
 ░░█░░█▀▀░█░█░█▀▀░█░░░█▀█░░█░░█▀▀
 ░░▀░░▀▀▀░▀░▀░▀░░░▀▀▀░▀░▀░░▀░░▀▀▀
 */
-function marinaDetailsTemplate(marina) {
+async function marinaDetailsTemplate(marina) {
     const marinaDetailsImgContainer = buildImages(marina);
-    console.log(marina);
     const marinaDetailsRatings = buildRatings(marina);
     const url = buildWebURL(marina);
     const marinaDetailsFuel = buildFuel(marina);
+    const marinaLocation = await buildLocation(marina);
     
     return`
         <h1 id="marina-name">${marina.name}</h1>            
@@ -122,8 +145,8 @@ function marinaDetailsTemplate(marina) {
             <div id="marina-details-card2">
             <div id="windy" class="divider details-windy"></div>
             <div id='locations' class="">
-                <h2 class="marinaDetails-services-title divider">Location Info</h2>
-                <div id="marinaDetailsLocation">Coords, Address, What3Words</div>
+            <h2 class="marinaDetails-services-title divider">Location Info</h2>
+            ${marinaLocation}
             </div>
         </div>
     `;
@@ -133,6 +156,7 @@ function buildImages(marina){
     //accomodating for multiple images but I've not found a marina that has more than 1 yet.  might be an api limitation...
     let imgElements ="";
     const name = marina.name;
+    let marinaDetailsImgContainer = "";
     if(marina.images.data.length >0){
         marina.images.data.forEach(element => {
             if (element.full_url){
@@ -142,13 +166,22 @@ function buildImages(marina){
                     </div>`
             }
         });
-        let marinaDetailsImgContainer = `
+        
+        if(marina.images.data.length >1){
+            marinaDetailsImgContainer = `
+                <div id="marinaDetailsImgContainer">
+                    <div class="carousel">${imgElements}</div>
+                    <button class="prev-btn"><img src="./images/icons/left.svg" alt="left arrow"></button>
+                    <button class="next-btn"><img src="./images/icons/right.svg" alt="right arrow"></button>
+                </div>
+            `;
+        }else{  //only add the buttons if there's more than 1 image
+            marinaDetailsImgContainer = `
             <div id="marinaDetailsImgContainer">
                 <div class="carousel">${imgElements}</div>
-                <button class="prev-btn"><img src="./images/icons/left.svg" alt="left arrow"></button>
-                <button class="next-btn"><img src="./images/icons/right.svg" alt="right arrow"></button>
             </div>
-        `;
+            `;
+        }
         return marinaDetailsImgContainer;
     }else{
         //return nothing if there's no images
@@ -168,7 +201,6 @@ function buildRatings(marina) {
     let star4 = "";
     let star5 = "";
     let marinaDetailsRatings = "";
-    console.log(marina.rating)
 
     if (marina.rating != null) {
         ratingCount = marina.review_count;
@@ -205,11 +237,11 @@ function buildRatings(marina) {
 }
 function createStarImage(isFull, isHalf) {
     if (isFull) {
-        return "<img src='./images/icons/full-star.png'>";
+        return "<img src='./images/icons/full-star.png' alt='rating star' width = 25>";
     } else if (isHalf) {
-        return "<img src='./images/icons/half-star.png'>";
+        return "<img src='./images/icons/half-star.png' alt='rating star' width = 25>";
     } else {
-        return "<img src='./images/icons/no-star.png'>";
+        return "<img src='./images/icons/no-star.png' alt='rating star' width = 25>";
     }
 }
 function buildFuel(marina){
@@ -232,11 +264,10 @@ const gasIcon = hasOrNot(hasGas);
 const propaneIcon = hasOrNot(hasPropane);
 
     function hasOrNot(item){
-        console.log(item)
         if (item){
-            return `<img class = "fuel-icon-img" src="./images/icons/green_check.svg" alt="">`;
+            return `<img class = "fuel-icon-img" src="./images/icons/green_check.svg" alt="" width = 25>`;
         }else{
-            return `<img class = "fuel-icon-img" src="./images/icons/red_x.svg" alt="">`;
+            return `<img class = "fuel-icon-img" src="./images/icons/red_x.svg" alt="" width = 25>`;
         }
     }
     function fixPrice(price) {
@@ -266,7 +297,7 @@ const propaneIcon = hasOrNot(hasPropane);
 marinaDetailsFuel = `
 <div id="fuel-container" class="grid-container">
     <div class="fuel-details-container" id="diesel-container">
-        <img class="fuel-type-icon" src="./images/icons/diesel-white.svg" alt="Diesel Icon">
+        <img class="fuel-type-icon" src="./images/icons/diesel-white.svg" alt="Diesel Icon" width = 50>
         <span class="fuel-title">Diesel:</span>
         <div class="fuel-icon">${dieselIcon} 
             <div class="price ${dieselPrice !== '' ? 'fuel-price' : ''} "> ${dieselPrice}</div>
@@ -274,7 +305,7 @@ marinaDetailsFuel = `
     </div>
 
     <div class="fuel-details-container" id="gas-container">
-        <img class="fuel-type-icon" src="./images/icons/gas-white.svg" alt="Gas Icon">
+        <img class="fuel-type-icon" src="./images/icons/gas-white.svg" alt="Gas Icon" width = 50>
         <span class="fuel-title">Gas:</span>
         <div class="fuel-icon">${gasIcon}
             <div class="price ${gasPremiumPrice !== '' || gasSuperPrice !== '' || gasRegularPrice !== '' ? 'fuel-price' : ''}">
@@ -284,7 +315,7 @@ marinaDetailsFuel = `
     </div>
 
     <div class="fuel-details-container" id="propane-container">
-        <img class="fuel-type-icon" src="./images/icons/propane-white.svg" alt="Propane Icon">
+        <img class="fuel-type-icon" src="./images/icons/propane-white.svg" alt="Propane Icon" width = 50>
         <span class="fuel-title">Propane:</span>
         <div class="fuel-icon">${propaneIcon}</div>
         <div class="price ${propanePrice !== '' ? 'fuel-price' : ''}">${propanePrice}</div>
@@ -293,10 +324,36 @@ marinaDetailsFuel = `
 `;
 return marinaDetailsFuel;
 }
+async function buildLocation(marina){
+    const lat = marina.location.lat;
+    const lon = marina.location.lon;
+    const what3words = marina.location.what3words;
+    let detailsLocation = "";
+    const locationData = await convertCoordToLocation(lat, lon, true)
+    const road = locationData.road;
+    const city = locationData.city;
+    const state = locationData.state;
+    const addressPin = "./images/icons/black_pin.svg";
+    const addressTarget = './images/icons/map_target.svg';
+    const w3w = './images/icons/w3w_Symbol_RGB_Red.svg';
 
-function location(marina){
+    detailsLocation = `
+        <div id='streetLocationContainer'>
+            <img src="${addressPin}" class="location-img-icons" alt="address icon" width = 25>
+            <div id='address'>
+                <div id='road'> ${road}</div>
+                <div id='city-state'> ${city}, ${state}</div>
+            </div>
+        </div>
+        <div id='coordsLocationContainer'>
+            <img src="${addressTarget}" class="location-img-icons" alt="coordinates icon" width = 25>
+            <div id='coords'>${lat.toFixed(2)}, ${lon.toFixed(2)}</div>
+        </div>
+        <div id='what3wordsContainer'>
+            <img src="${w3w}" class="location-img-icons" alt="coordinates icon" width = 25>
+            <div id='threeWords'>${what3words}</div>
+        </div>
 
-}
-function buildWhatThreeWords(marina){
-
+    `
+    return detailsLocation;
 }

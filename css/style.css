@@ -200,6 +200,7 @@ header {
     min-width: 2rem;
     /*border: 0;*/
     border-left: 2px solid var(--primary-color);
+    border-right: 1px solid var(--highlight-color);
 }
 button:hover:not(.prev-btn, .next-btn) {
     transform: scale(1.11);
@@ -269,25 +270,27 @@ footer{
 
 
 /* Marina-Details Style */
-
 #marina-details{
     width: 90%;
-    margin: 4rem auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    margin: 2rem auto 4rem auto;
+    padding-bottom: 4rem;
 }
-#marina-details-card1{
-    background-color: var(--primary-color);
+#marina-details-card1, #marina-details-card2{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     gap: 1rem;
-    padding-top: 5%;
+    padding: 5% 0 5% 0;
 }
-
-
-
+#marina-details-card1{
+    background-color: var(--primary-color);
+}
+#marina-details-card2{
+    background-color: var(--secondary-color);
+}
 #marinaDetailsImgContainer{
     position: relative;
     overflow: hidden;
@@ -389,7 +392,6 @@ footer{
 .fuel-details-container:hover .fuel-price {
     display: block; 
 }
-
 #marinaDetailsRatings{
     display: flex;
     gap: 1rem;
@@ -401,33 +403,39 @@ footer{
     color: var(--light-color);
     font-size: 1rem;
 }
-#stars{
-    
-}
 #stars *{
     width: 1rem;
     height: auto;
-}
-
-#marina-details-card2{
-    background-color: var(--secondary-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 1rem;
-    padding: 5% 0 5% 0;
 }
 #marina-details-card2 #windy{
     width: 90%;
     margin: 0 auto;
 }
-
-
+#streetLocationContainer, #coordsLocationContainer, #what3wordsContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 1rem auto 0 0;
+    font-size: 1rem;
+    justify-content: baseline;
+    align-items: baseline;
+}
+.location-img-icons{
+    width: 2rem;
+    height: auto;
+    margin: auto 0;
+}
+#city-state, #coords, #threeWords{
+    margin: auto 0
+}
 
 @media screen and (min-width: 800px) {
     body {
         max-width: 70%;
         margin: auto;
+    }
+    #hero-img{
+        width: 100%;
     }
     #search-container{
         width: 50%;
@@ -447,13 +455,13 @@ footer{
         overflow: hidden;
         /*z-index: 101;*/
     }
+    #windy {
+        height: 750px;
+    }
     #marina-details{
         display: grid;
         grid-template-columns: 1fr 1fr;
         width: 100%;
-        gap: 2rem;
-        margin: 2rem auto 4rem auto;
-        padding-bottom: 4rem;
     }
     #marina-name{
         grid-column: 1/-1;

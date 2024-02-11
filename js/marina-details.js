@@ -30,40 +30,11 @@ const lon = marina.data.location.lon;
 //webcam object
 const webCams = new WebCams(lat, lon)
 await webCams.init();
+
+//destroy orig id=windy element so we can replace it with js built element structure
+//was a rare case that popped up.  this seemed to fix it.  windy api really wants to see the windy element in the html structure before moving on.
+const ogWindy = document.getElementById('windy');
+ogWindy.remove();
 //map object
 const map = new Map()
-map.init(lat, lon, marina, webCams, "DETAIL");
-
-
-
-
-
-
-/* 
-░█▀▀░█▀█░█▀▄░█▀█░█░█░█▀▀░█▀▀░█░░░░░█░█░█▀█░█▀█░█▀▄░█░░░█▀▀░█▀▄
-░█░░░█▀█░█▀▄░█░█░█░█░▀▀█░█▀▀░█░░░░░█▀█░█▀█░█░█░█░█░█░░░█▀▀░█▀▄
-░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░░▀░▀░▀░▀░▀░▀░▀▀░░▀▀▀░▀▀▀░▀░▀
-*/
-//carousel button handling
-const carousel = document.querySelector('.carousel');
-const slides = document.querySelectorAll('.slide');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
-let currentIndex = 0;
-
-//handle case when there are no buttons (becuase the marina has no images)
-if(prevBtn && nextBtn){
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-        updateCarousel();
-    });
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
-        updateCarousel();
-    });
-    function updateCarousel() {
-        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-}
-
-
+await map.init(lat, lon, marina, webCams, "DETAIL");

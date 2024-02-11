@@ -146,7 +146,7 @@ export async function convertLocationToCoords(city, state, country) {
 ░█░░░█░█░█░█░█▀▄░█░█░░░░█░░█░█░░░█░░░░█░░░█░░░█░░▄▀░░▀▀█░░█░
 ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░░░░░▀░░▀▀▀░░░▀▀▀░▀▀▀░░▀░░░▀░░▀░░░▀▀▀░░▀░
 */
-export async function convertCoordToLocation(lat, lon) {
+export async function convertCoordToLocation(lat, lon, full=false) {
     try {
         const geocodingApiKey = '8f14ece6e8f5486286773645b8098166';
         const geocodingEndpoint = 'https://api.opencagedata.com/geocode/v1/json';
@@ -160,9 +160,16 @@ export async function convertCoordToLocation(lat, lon) {
         const data = await response.json();
 
         if (data.results.length > 0) {
-            // Extract city name from the first result
+            // Extract city name from the first result 
+            const road = data.results[0].components.road;
             const city = data.results[0].components.city;
-            return city;
+            const state = data.results[0].components.state;
+            
+            if (full = true){
+                return {road, city, state};
+            }else{
+                return city;
+            }
         } else {
             throw new Error('Geocoding failed. No results found.');
         }

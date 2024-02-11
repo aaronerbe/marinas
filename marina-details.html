@@ -5,32 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marinas | Home</title>
     <link rel="stylesheet" href="./css/style.css">
-    <!--<link rel="stylesheet" href="/css/leaflet-label.css">-->
     
     <!-- load my JS -->
-    <script src="./js/marina-details.js" type="module"></script>
     <script type="module" src="./js/Map.mjs"></script>
+    <script src="./js/marina-details.js" type="module"></script>
     
     <!-- Add Windy API library -->
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script src="https://api.windy.com/assets/map-forecast/libBoot.js"></script>
-
     <!-- Leaflet.markercluster CSS and JS -->
-    <!-- NEEDED to cluster markers together and organize.  Windy won't zoom in enough to make sense of them otherwise -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css">
     <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-    
-        
     <link rel="icon" href="./favicon.ico">
 </head>
 <body id="marina-details-body">
     <header class="divider" id="main-header"></header>    
     <main id="marina-details-main">
-    <!--    <div id="marina-details-container">
-            <div id="marina-details"></div>
+            <!-- to be destroyed and rebuilt w/ js.  had to put this here because sometimes the promise statements take too long and windy complains that this isn't here yet since my js is waiting forthe promise before placing the elements -->
             <div id="windy" class="divider details-windy"></div>
-        </div>-->
     
     <div id="marina-details" class="divider">
     </div>
@@ -40,5 +33,7 @@
     <footer id="main-footer"></footer>
 </body>
 </html>
+
+
 
 
