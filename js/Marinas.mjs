@@ -14,6 +14,11 @@ export default class Marina {
         this.key = 'YYmZxvMSyMqaCyf6PuLz';
     }
 
+    /* 
+    ░▀█▀░█▀█░▀█▀░▀█▀
+    ░░█░░█░█░░█░░░█░
+    ░▀▀▀░▀░▀░▀▀▀░░▀░
+    */
     async init() {
         const data = await this.fetchMarinaData();
     }
@@ -82,7 +87,6 @@ export default class Marina {
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
         let currentIndex = 0;
-
         //handle case when there are no buttons (becuase the marina has no images)
         if(prevBtn && nextBtn){
             prevBtn.addEventListener('click', () => {

@@ -30,7 +30,6 @@ const lon = marina.data.location.lon;
 //webcam object
 const webCams = new WebCams(lat, lon)
 await webCams.init();
-
 //destroy orig id=windy element so we can replace it with js built element structure
 //was a rare case that popped up.  this seemed to fix it.  windy api really wants to see the windy element in the html structure before moving on.
 const ogWindy = document.getElementById('windy');

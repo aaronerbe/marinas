@@ -1,5 +1,5 @@
 import { loadHeaderFooter, showElement, convertLocationToCoords, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink, convertCoordToLocation} from "./utils.mjs";
-//import { populateFavoritesMenu, saveFavorite } from "./Favorites.mjs";
+
 import Marina from "./Marinas.mjs";
 import Map from "./Map.mjs";
 import Favorites from "./Favorites.mjs";

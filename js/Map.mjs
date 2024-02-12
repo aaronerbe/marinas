@@ -1,6 +1,11 @@
 import { convertCoordToLocation } from "./utils.mjs";
 
 
+/* 
+░█▄█░█▀█░█▀█░█▀▀░░░█▀▀░█░░░█▀█░█▀▀░█▀▀
+░█░█░█▀█░█▀▀░▀▀█░░░█░░░█░░░█▀█░▀▀█░▀▀█
+░▀░▀░▀░▀░▀░░░▀▀▀░░░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀▀▀
+*/
 export default class Map{
     constructor(){
         this.lat = "";
@@ -14,6 +19,12 @@ export default class Map{
         this.cameraIcon = './images/icons/camera_pin.svg';
         this.windyAPI
     }
+
+    /* 
+    ░▀█▀░█▀█░▀█▀░▀█▀
+    ░░█░░█░█░░█░░░█░
+    ░▀▀▀░▀░▀░▀▀▀░░▀░
+    */
     async init(lat, lon, marinas, webCams, type){
         this.lat = lat;
         this.lon = lon;
@@ -33,6 +44,12 @@ export default class Map{
             });
         }
     }
+
+    /* 
+    ░█▄█░█▀█░█▀█░░░█▀█░█▀█░▀█▀░▀█▀░█▀█░█▀█░█▀▀
+    ░█░█░█▀█░█▀▀░░░█░█░█▀▀░░█░░░█░░█░█░█░█░▀▀█
+    ░▀░▀░▀░▀░▀░░░░░▀▀▀░▀░░░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀▀
+    */
     buildOptions(){
         let options = {
             key: this.key,
@@ -42,6 +59,12 @@ export default class Map{
         };
         return options;
     }
+
+    /* 
+    ░█▀▄░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█▄█░█▀█░█▀█
+    ░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄░░░█░█░█▀█░█▀▀
+    ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░▀░▀░▀░▀░▀░░
+    */
     renderMap(){
         const {map} = this.windyAPI;
         this.buildHyperZoom(map);
@@ -54,6 +77,12 @@ export default class Map{
         }
         
     }
+
+    /* 
+    ░█▀▀░█░░░█░█░█▀▀░▀█▀░█▀▀░█▀▄░░░█▄█░█▀█░█▀▄░█░█░█▀▀░█▀▄░█▀▀
+    ░█░░░█░░░█░█░▀▀█░░█░░█▀▀░█▀▄░░░█░█░█▀█░█▀▄░█▀▄░█▀▀░█▀▄░▀▀█
+    ░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀░░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀
+    */
     buildClusterMarkers(map){
         // Create a marker cluster group
         const markerCluster = L.markerClusterGroup();
@@ -83,6 +112,12 @@ export default class Map{
         // Add the marker cluster group to the map
         map.addLayer(markerCluster);
     }
+
+    /* 
+    ░█░█░█▀▀░█▀▄░█▀▀░█▀█░█▄█░░░█▄█░█▀█░█▀▄░█░█░█▀▀░█▀▄░█▀▀
+    ░█▄█░█▀▀░█▀▄░█░░░█▀█░█░█░░░█░█░█▀█░█▀▄░█▀▄░█▀▀░█▀▄░▀▀█
+    ░▀░▀░▀▀▀░▀▀░░▀▀▀░▀░▀░▀░▀░░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀
+    */
     buildWebCamMarkers(map){
         // Create a marker cluster group
         const webCamMarkerCluster = L.markerClusterGroup();
@@ -99,6 +134,11 @@ export default class Map{
         });
 
     }
+    /* 
+    ░█▀█░█▀█░▀█▀░░░█▄█░█▀█░█▀▄░█░█░█▀▀░█▀▄░█▀▀
+    ░█▀▀░█░█░░█░░░░█░█░█▀█░█▀▄░█▀▄░█▀▀░█▀▄░▀▀█
+    ░▀░░░▀▀▀░▀▀▀░░░▀░▀░▀░▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀
+    */
     renderPOIMarker(map, lat, lon, icon, name, link, img=""){
         const iconSize = [30, 30];
         const customIcon = L.icon({
@@ -160,6 +200,11 @@ export default class Map{
         });
         map.addLayer(marker);
     }
+    /* 
+    ░█░█░█░█░█▀█░█▀▀░█▀▄░░░▀▀█░█▀█░█▀█░█▄█
+    ░█▀█░░█░░█▀▀░█▀▀░█▀▄░░░▄▀░░█░█░█░█░█░█
+    ░▀░▀░░▀░░▀░░░▀▀▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░▀░▀
+    */
     buildHyperZoom(map){
         // MAP HACK to fix zoom:
         map.options.minZoom = 4;
@@ -189,6 +234,11 @@ export default class Map{
         //Adds the openstreetmap layer (hack to fix zoom limitation)
         map.addLayer(topLayer);
     }
+    /* 
+    ░█▀▀░█▀▀░▀█▀░░░█▀█░█▀█░█▄█░█▀▀
+    ░█░█░█▀▀░░█░░░░█░█░█▀█░█░█░█▀▀
+    ░▀▀▀░▀▀▀░░▀░░░░▀░▀░▀░▀░▀░▀░▀▀▀
+    */
     async getName(){
         if ( this.type === 'search') {
             this.name = await convertCoordToLocation(this.lat, this.lon);
@@ -197,6 +247,11 @@ export default class Map{
             this.name = this.marinas.data.name
         }
     }
+    /* 
+    ░█▀▀░█▀▀░▀█▀░░░▀█▀░█▀▀░█▀█░█▀█░█▀▀
+    ░█░█░█▀▀░░█░░░░░█░░█░░░█░█░█░█░▀▀█
+    ░▀▀▀░▀▀▀░░▀░░░░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀
+    */
     getHomeOrMarinaIcon(){
         //uses pin for search (default) or extracts the image provided by marinas api for details page
         if (this.type != 'search'){
