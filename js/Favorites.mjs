@@ -57,6 +57,9 @@ export default class Favorites{
         else{
             this.hideMenu()
         }
+         // creating click anywhere event listener to close the menu by clicking anywhere onthe page
+        this.clickAnywhereToCloseHandler = this.clickAnywhereToClose.bind(this);
+        document.addEventListener('click', this.clickAnywhereToCloseHandler);
     }
     /*
     ░█▀▄░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█▄█░█▀▀░█▀█░█░█
@@ -66,51 +69,40 @@ export default class Favorites{
     renderMenu() {
         const deleteBtn = './images/icons/close_delete.svg';
         this.menuContainer.innerHTML = 'Saved Location Searches';
-        //this.menuContainer.setAttribute('id','menuContainer');
-
         if (this.favoritesArray.length === 0) {
             const msg = document.createElement('div');
             msg.innerText = "No Saved Locations";
             this.menuContainer.appendChild(msg);
         } else {
-            // Attach clickAnywhereToClose function to event listener
-            document.addEventListener('click', this.clickAnywhereToClose.bind(this));
-
             this.favoritesArray.forEach(item => {
                 const menuItem = document.createElement('div');
                 menuItem.setAttribute('class', 'menuItem');
                 const index = Object.keys(item)[0];
                 const location = capitalizeLocation(Object.values(item)[0]);
-
                 const menuLocation = document.createElement('div');
                 menuLocation.innerText = location;
                 menuLocation.classList.add('menuLocation');
-
                 // Create a delete button
                 const menuDelete = document.createElement('img');
                 menuDelete.setAttribute('src', deleteBtn);
                 menuDelete.setAttribute('alt', 'Delete');
                 menuDelete.setAttribute('id', index);
                 menuDelete.classList.add('delete-btn');
-
                 // Add a click event listener to handle the click on the delete button
                 menuDelete.addEventListener('click', () => {
                     this.handleDelete(location);
                 });
-
                 // Add a click event listener to handle the click on the menu item
                 menuLocation.addEventListener('click', () => {
                     loadSearch(location);
                     this.hideMenu();
                 });
-
                 // Append both the menu item and the delete button to the menu container
                 menuItem.appendChild(menuLocation);
                 menuItem.appendChild(menuDelete);
                 this.menuContainer.appendChild(menuItem)
             });
         }
-
         showElement(this.menuContainer);
         this.map.style.zIndex = '-1';
     }
@@ -122,28 +114,20 @@ export default class Favorites{
     ░▀▀░░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀░░░▀░░░▀░▀░░▀░░▀▀▀░▀░▀░▀▀▀░░▀░░▀▀▀
     */
     handleDelete(location){
-        console.log(location);
+        //had to add this here so it won't close the menu when were deleting an item. . instead, refresh it
+        document.removeEventListener('click', this.clickAnywhereToCloseHandler);
         location = location.toLowerCase();
         // Get fav from localstorage & then parse into array
-        this.fetchFavorites();
-        // Check if the location is there
-        console.log(this.favoritesArray);
-    
+        this.fetchFavorites();    
         // Find the index of the item with the matching location value
         const indexToRemove = this.favoritesArray.findIndex(item => Object.values(item)[0].toLowerCase() === location);
-    
         // Remove the item from the array if found
         if (indexToRemove !== -1) {
             this.favoritesArray.splice(indexToRemove, 1);
         }
-    
-        console.log(this.favoritesArray);
         localStorage.setItem(this.key, JSON.stringify(this.favoritesArray));
-        //do a quick hide so showFavoritesmenu will handle it right.  
-        // i have code in place to allow bookmarksbutton to toggle it off/on
+        //refresh the menu
         this.renderMenu();
-        this.menuContainer.classList.add('visible');
-        this.menuContainer.classList.remove('visible');
     }
 
     /* 
@@ -164,23 +148,27 @@ export default class Favorites{
         hideElement(this.menuContainer);
         //hack to make the menu display over the map when it's showing
         this.map.style.zIndex='100';
+
+        // Remove the event listener for clicking anywhere to close the menu
+        document.removeEventListener('click', this.clickAnywhereToCloseHandler);
     }
     /* 
     ░█░░░▀█▀░█▀▀░▀█▀░█▀▀░█▀█░█▀▀░█▀▄░░░▀█▀░█▀█░░░█▀▀░█░░░█▀█░█▀▀░█▀▀░░░█▄█░█▀▀░█▀█░█░█
     ░█░░░░█░░▀▀█░░█░░█▀▀░█░█░█▀▀░█▀▄░░░░█░░█░█░░░█░░░█░░░█░█░▀▀█░█▀▀░░░█░█░█▀▀░█░█░█░█
     ░▀▀▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀░▀░▀░░░░▀░░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░░░▀░▀░▀▀▀░▀░▀░▀▀▀
     */
-    clickAnywhereToClose(event){
+    clickAnywhereToClose(event) {
         // Check if the menu is visible
         if (!this.menuContainer.classList.contains('hidden')) {
             // Check if the clicked target is not part of the menu or the bookmarks element
             if (!this.menuContainer.contains(event.target) && !this.bookmarksElement.contains(event.target)) {
                 // Hide the menu
                 this.hideMenu();
-                // Remove the event listener
-                document.removeEventListener('click', this.clickAnywhereToClose); // Here is the change
+                // Remove the event listener using the stored function reference
+                document.removeEventListener('click', this.clickAnywhereToCloseHandler);
             }
         }
     }
+    
     
 }
