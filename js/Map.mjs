@@ -17,6 +17,7 @@ export default class Map{
         this.key = 'qrQODxrOJqHA9Xn70LbOLmFhIVEEWg4h';
         this.marinaIcon = './images/icons/map-home.png';
         this.cameraIcon = './images/icons/camera_pin.svg';
+        this.whitecameraIcon = './images/icons/camera_pin_white.svg'
         this.imgIcon = './images/icons/greenPin.png';
         this.reviewIcon = './images/icons/redPin.png';
         this.bothIcon = './images/icons/orangePin.png';
@@ -79,7 +80,7 @@ export default class Map{
         }else{
             this.buildWebCamMarkers(map);
         }
-        
+        this.renderLegend(map);
     }
 
     /* 
@@ -134,6 +135,46 @@ export default class Map{
         });
         // Add the marker cluster group to the map
         map.addLayer(markerCluster);
+    }
+
+    /* 
+    ░█▀▄░█▀▀░█▀█░█▀▄░█▀▀░█▀▄░░░█░░░█▀▀░█▀▀░█▀▀░█▀█░█▀▄
+    ░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄░░░█░░░█▀▀░█░█░█▀▀░█░█░█░█
+    ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░
+    */
+    renderLegend(map){
+        const legend = document.createElement('div');
+        legend.innerHTML =`
+                <div id='searchPin' class="pin-legends">
+                    <img src="${this.marinaIcon}" alt="Search Marker">
+                    <p>Search Marker</p>
+                </div>
+                <div id='normalPin' class="pin-legends">
+                    <img src="${this.neitherIcon}" alt="Marina Marker">
+                    <p>Marinas</p>
+                </div>
+                <div id='imgPin' class="pin-legends">
+                    <img src="${this.imgIcon}" alt="Marina with Images Marker">
+                    <p>With Images</p>
+                </div>
+                <div id='reviewPin' class="pin-legends">
+                    <img src="${this.reviewIcon}" alt="Marina with Reviews Marker">
+                    <p>With Reviews</p>
+                </div>
+                <div id='bothPin' class="pin-legends">
+                    <img src="${this.bothIcon}" alt="Marina with Images and Reviews Marker">
+                    <p>With Images & Reviews</p>
+                </div>
+                <!-- <div id='webCam' class="pin-legends">
+                    <img src="${this.whitecameraIcon}" alt="WebCam Markers">
+                    <p>WebCams</p>
+                </div> -->
+
+        `;
+        legend.setAttribute('id', 'legendContainer')
+        //map.getPanes().overlayPane.appendChild(legend);
+        const mapContainer = map.getContainer();
+        mapContainer.appendChild(legend);
     }
 
     /* 
