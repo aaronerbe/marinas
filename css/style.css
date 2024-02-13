@@ -183,7 +183,7 @@ header {
     display: flex;
     width: 80%;
     cursor: pointer;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: center;
     /*margin: 0rem;
     height: 1rem;*/
@@ -197,14 +197,15 @@ header {
     transform: scale(1.02);
 }
 .menuLocation{
-    margin: 0rem;
+    margin: 0rem auto 0 0;
     padding: .2rem 1rem;
     cursor: pointer;
+    width: 100%;
 }
 .delete-btn{
     height: 1rem;
     width: auto;
-    margin-right: 1rem;
+    margin: 0 1rem 0 0;
 }
 .delete-btn:hover{
     transform: scale(1.3);
