@@ -17,6 +17,10 @@ export default class Map{
         this.key = 'qrQODxrOJqHA9Xn70LbOLmFhIVEEWg4h';
         this.marinaIcon = './images/icons/map-home.png';
         this.cameraIcon = './images/icons/camera_pin.svg';
+        this.imgIcon = './images/icons/greenPin.png';
+        this.reviewIcon = './images/icons/redPin.png';
+        this.bothIcon = './images/icons/orangePin.png';
+        this.neitherIcon = './images/icons/bluePin.png'
         this.windyAPI
     }
 
@@ -86,14 +90,33 @@ export default class Map{
     buildClusterMarkers(map){
         // Create a marker cluster group
         const markerCluster = L.markerClusterGroup();
-        //iterate through the marina data and add a marker for each location
-        //data.data because it's double deep in the JSON
+        const iconSize = [30, 30];
+        let iconUrl = ""
+
         Object.values(this.marinas.data.data).forEach(marina => {
             const { id, name, location, kind } = marina;
             const { lat, lon } = location;
+            const imgCount = marina.images.data.length > 0;
+            const reviewCount = marina.rating > 0;
+            //create custom pins depending on the content of the marina
+            if(imgCount && reviewCount){
+                iconUrl = this.bothIcon;
+            }else if(imgCount && !reviewCount){
+                iconUrl = this.imgIcon;
+            }else if(!imgCount && reviewCount){
+                iconUrl = this.reviewIcon;
+            }else{
+                iconUrl = this.neitherIcon;
+            }
+            //build the custom pin
+            const customIcon = L.icon({
+                iconUrl: iconUrl,
+                iconSize: iconSize,
+                iconAnchor: [15, 30],
+            });
             // Create a marker element for each marina
             if (kind === 'marina') {
-                const marker = L.marker([lat, lon]);
+                const marker = L.marker([lat, lon], {icon: customIcon});
                 //dynamically add a div with a link containing the marina name that is clickable.  adds it to the popup
                 marker.bindPopup(`<div id="popupContent"><a href="#" id="marinaLink">${name}</a></div>`).openPopup();
                 // Add a click event listener to the link inside the popup
