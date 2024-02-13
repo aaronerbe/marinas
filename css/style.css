@@ -171,22 +171,52 @@ header {
     padding: .5rem;
     color: var(--light-color);
     background-color: var(--primary-color);
-    width: 100%;
+    width: 85%;
     font-size: 1rem;
     position: absolute;
     transform: translate(0, 2rem);
     overflow-y: auto;
     z-index: 100;
+    overflow-x: hidden;
 }
-.favorite-location{
+.menuItem{
+    display: flex;
+    width: 80%;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    /*margin: 0rem;
+    height: 1rem;*/
+}
+.menuItem{
+    width: 100%;
+}
+.menuItem:hover{
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+    transform: scale(1.02);
+}
+.menuLocation{
     margin: 0rem;
     padding: .2rem 1rem;
     cursor: pointer;
 }
-.favorite-location:hover{
-    background-color: var(--highlight-color);
-    color: var(--primary-color);
+.delete-btn{
+    height: 1rem;
+    width: auto;
+    margin-right: 1rem;
 }
+.delete-btn:hover{
+    transform: scale(1.3);
+}
+.delete-btn:active{
+    transform: scale(1.1);
+}
+/*#menuContainer{
+    display: flex;
+    flex-direction: column;
+    
+}*/
 #searchButton{
     background-color: var(--highlight-color);
     border-radius: 0;
