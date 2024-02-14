@@ -106,6 +106,6 @@ async function search() {
         const webCams = new WebCams(lat, lon);
         await webCams.init(); //wait for webcam data to be initiatilized
 
-        map.init(lat, lon, marinas, webCams, "SEARCH")
+        await map.init(lat, lon, marinas, webCams, "SEARCH")
     }
 }

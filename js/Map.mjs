@@ -34,8 +34,8 @@ export default class Map{
         this.lat = lat;
         this.lon = lon;
         this.marinas = marinas;
-        this.type = type
-        this.type = this.type.toLowerCase();
+        this.type = type.toLowerCase();
+        //this.type = this.type.toLowerCase();
         this.webCams = webCams
         await this.getName()
         this.getHomeOrMarinaIcon()
@@ -74,6 +74,7 @@ export default class Map{
         const {map} = this.windyAPI;
         this.buildHyperZoom(map);
         //build marker for the marina site OR the search Location
+        console.log(this.name);
         this.renderPOIMarker(map, this.lat, this.lon, this.marinaIcon, this.name, "", "")
         this.buildWebCamMarkers(map);
         if (this.type === 'search'){
@@ -359,10 +360,12 @@ export default class Map{
     */
     async getName(){
         if ( this.type === 'search') {
-            this.name = await convertCoordToLocation(this.lat, this.lon);
+            let result = await convertCoordToLocation(this.lat, this.lon);
+            this.name = `${result.city}, ${result.state}`
         }
         else{
             this.name = this.marinas.data.name
+            console.log(this.name)
         }
     }
     /* 

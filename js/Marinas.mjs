@@ -328,11 +328,20 @@ export default class Marina {
         const lat = this.data.location.lat;
         const lon = this.data.location.lon;
         const what3words = this.data.location.what3words;
-        let detailsLocation = "";
+        //let detailsLocation = "";
         const locationData = await convertCoordToLocation(lat, lon, true)
-        const road = capitalizeLocation(locationData.road);
-        const city = capitalizeLocation(locationData.city);
-        const state = capitalizeLocation(locationData.state);
+        //only assign the value if it's not undefined.otherwise it's ""
+        const road = locationData.road !== undefined ? capitalizeLocation(locationData.road) : "";
+        //add the , here so it's skipped if it's undefined.  result would just be State instead of "", State
+        const city = locationData.city !== undefined ? `${capitalizeLocation(locationData.city)},` : "";
+        const state = locationData.state !== undefined ? capitalizeLocation(locationData.state) : "";
+
+        console.log(road)
+        console.log(city)
+        console.log(state)
+        console.log(locationData.road)
+        console.log(locationData.city)
+        console.log(locationData.state)
         const addressPin = "./images/icons/black_pin.svg";
         const addressTarget = './images/icons/map_target.svg';
         const w3w = './images/icons/w3w_Symbol_RGB_Red.svg';
@@ -342,7 +351,7 @@ export default class Marina {
                 <img src="${addressPin}" class="location-img-icons" alt="address icon" width = 25>
                 <div id='address'>
                     <div id='road'> ${road}</div>
-                    <div id='city-state'> ${city}, ${state}</div>
+                    <div id='city-state'> ${city} ${state}</div>
                 </div>
             </div>
             <div id='coordsLocationContainer'>
