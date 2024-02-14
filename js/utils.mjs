@@ -49,7 +49,7 @@ export function renderWithTemplate(templateFn, parentElement, position = "afterb
 ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░▀░░░▀░░░▀▀▀░▀░▀░▀░░░▀▀▀░░▀░░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀
 */
 export function capitalizeLocation(locationString) {
-    if (locationString !== null) {
+    if (locationString != undefined && locationString !== null) {
         // Replace hyphens with spaces
         locationString = locationString.replace(/-/g, ' ');
 
