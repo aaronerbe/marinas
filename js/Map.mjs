@@ -1,4 +1,4 @@
-import { convertCoordToLocation } from "./utils.mjs";
+import { convertCoordToLocation, hideElement, showElement } from "./utils.mjs";
 
 
 /* 
@@ -142,6 +142,22 @@ export default class Map{
     ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░░░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░
     */
     renderLegend(map){
+        const expandLegendIcon = document.createElement('img');
+        expandLegendIcon.setAttribute('src', './images/icons/expand-legend-icon.svg');
+        expandLegendIcon.setAttribute('alt', 'expand legend icon');
+        expandLegendIcon.setAttribute('class', 'visible legendIcon');
+        
+        const collapseLegendIcon = document.createElement('img');
+        collapseLegendIcon.setAttribute('src', './images/icons/collapse-legend-icon.svg');
+        collapseLegendIcon.setAttribute('alt', 'collapse legend icon');
+        collapseLegendIcon.setAttribute('class', 'hidden legendIcon');
+        
+        const legendIconContainer = document.createElement('div'); 
+        legendIconContainer.appendChild(expandLegendIcon);
+        legendIconContainer.appendChild(collapseLegendIcon);
+        legendIconContainer.setAttribute('id', 'legendIconContainer');
+
+        //legendIcon.appendChild(legendIcon);
         const legend = document.createElement('div');
         legend.innerHTML =`
                 <div id='searchPin' class="pin-legends">
@@ -171,9 +187,34 @@ export default class Map{
 
         `;
         legend.setAttribute('id', 'legendContainer')
-        //map.getPanes().overlayPane.appendChild(legend);
+        legend.setAttribute('class', 'hidden')
+
         const mapContainer = map.getContainer();
+        mapContainer.appendChild(legendIconContainer);
         mapContainer.appendChild(legend);
+
+        //make it a pointer when overing over legend expand/collapse buttons
+        legendIconContainer.addEventListener('mouseenter', () => {
+            // Change the cursor to pointer
+            legendIconContainer.style.cursor = 'pointer';
+        });
+        legendIconContainer.addEventListener('mouseleave', () => {
+            // Change the cursor back to default
+            legendIconContainer.style.cursor = 'default';
+        });
+        //show hide the legend and the alternativing expand/collapse buttons
+        expandLegendIcon.addEventListener('click', ()=>{
+            showElement(legend);
+            showElement(collapseLegendIcon)
+            hideElement(expandLegendIcon)
+        })
+        collapseLegendIcon.addEventListener('click', ()=>{
+            hideElement(legend);
+            hideElement(collapseLegendIcon)
+            showElement(expandLegendIcon)
+        })
+
+
     }
 
     /* 

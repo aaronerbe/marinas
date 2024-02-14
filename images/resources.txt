@@ -26,3 +26,5 @@ green pin:  https://www.iconfinder.com/icons/68012/pin_green_location_icon
 orange pin:  https://www.iconfinder.com/icons/68013/pin_orange_location_icon
 blue pin:  https://www.iconfinder.com/icons/68011/pin_blue_location_icon
 close_delete: https://www.iconfinder.com/icons/4115230/cancel_close_delete_icon
+expand-legend-icon: https://www.iconfinder.com/icons/9109917/chevron_circle_down_f_icon
+collapse-legend-icon: https://www.iconfinder.com/icons/9109919/chevron_circle_up_f_icon
