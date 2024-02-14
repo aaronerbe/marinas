@@ -75,10 +75,9 @@ export default class Map{
         this.buildHyperZoom(map);
         //build marker for the marina site OR the search Location
         this.renderPOIMarker(map, this.lat, this.lon, this.marinaIcon, this.name, "", "")
+        this.buildWebCamMarkers(map);
         if (this.type === 'search'){
             this.buildClusterMarkers(map);
-        }else{
-            this.buildWebCamMarkers(map);
         }
         this.renderLegend(map);
     }
@@ -165,10 +164,10 @@ export default class Map{
                     <img src="${this.bothIcon}" alt="Marina with Images and Reviews Marker">
                     <p>With Images & Reviews</p>
                 </div>
-                <!-- <div id='webCam' class="pin-legends">
+                <div id='webCam' class="pin-legends">
                     <img src="${this.whitecameraIcon}" alt="WebCam Markers">
                     <p>WebCams</p>
-                </div> -->
+                </div>
 
         `;
         legend.setAttribute('id', 'legendContainer')

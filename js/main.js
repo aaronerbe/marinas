@@ -1,6 +1,7 @@
 import { loadHeaderFooter, showElement, convertLocationToCoords, splitCityStateCountry, hideElement, renderMessage, hideMessage, slideAndShrink, convertCoordToLocation} from "./utils.mjs";
 
 import Marina from "./Marinas.mjs";
+import WebCams from "./WebCams.mjs";
 import Map from "./Map.mjs";
 import Favorites from "./Favorites.mjs";
 
@@ -101,7 +102,10 @@ async function search() {
         const lon = coords.lng;
         const marinas = new Marina("", lat, lon, "SEARCH");
         await marinas.init(); // Wait for marinas data to be initialized        
-        console.log(marinas);
-        map.init(lat, lon, marinas, "", "SEARCH")
+        //console.log(marinas);
+        const webCams = new WebCams(lat, lon);
+        await webCams.init(); //wait for webcam data to be initiatilized
+
+        map.init(lat, lon, marinas, webCams, "SEARCH")
     }
 }
