@@ -143,18 +143,23 @@ export default class Map{
     */
     renderLegend(map){
         const expandLegendIcon = document.createElement('img');
-        expandLegendIcon.setAttribute('src', './images/icons/expand-legend-icon.svg');
+        expandLegendIcon.setAttribute('src', './images/icons/expand-legend-icon-white.svg');
         expandLegendIcon.setAttribute('alt', 'expand legend icon');
         expandLegendIcon.setAttribute('class', 'visible legendIcon');
         
         const collapseLegendIcon = document.createElement('img');
-        collapseLegendIcon.setAttribute('src', './images/icons/collapse-legend-icon.svg');
+        collapseLegendIcon.setAttribute('src', './images/icons/collapse-legend-icon-white.svg');
         collapseLegendIcon.setAttribute('alt', 'collapse legend icon');
         collapseLegendIcon.setAttribute('class', 'hidden legendIcon');
+
+        const legendTitle = document.createElement('span');
+        legendTitle.setAttribute('id', 'legendTitle');
+        legendTitle.innerHTML = 'Legend';
         
         const legendIconContainer = document.createElement('div'); 
         legendIconContainer.appendChild(expandLegendIcon);
         legendIconContainer.appendChild(collapseLegendIcon);
+        legendIconContainer.appendChild(legendTitle);
         legendIconContainer.setAttribute('id', 'legendIconContainer');
 
         //legendIcon.appendChild(legendIcon);
@@ -193,27 +198,36 @@ export default class Map{
         mapContainer.appendChild(legendIconContainer);
         mapContainer.appendChild(legend);
 
-        //make it a pointer when overing over legend expand/collapse buttons
+        //make it a pointer when hovering over legend expand/collapse buttons
         legendIconContainer.addEventListener('mouseenter', () => {
             // Change the cursor to pointer
             legendIconContainer.style.cursor = 'pointer';
+            expandLegendIcon.style.opacity = '1';
+            collapseLegendIcon.style.opacity = '1';
+            legendTitle.style.opacity = '1';
+            
         });
         legendIconContainer.addEventListener('mouseleave', () => {
             // Change the cursor back to default
             legendIconContainer.style.cursor = 'default';
+            expandLegendIcon.style.opacity = '0.75';
+            collapseLegendIcon.style.opacity = '0.75';
+            legendTitle.style.opacity = '0.75';
+            
         });
-        //show hide the legend and the alternativing expand/collapse buttons
-        expandLegendIcon.addEventListener('click', ()=>{
-            showElement(legend);
-            showElement(collapseLegendIcon)
-            hideElement(expandLegendIcon)
-        })
-        collapseLegendIcon.addEventListener('click', ()=>{
-            hideElement(legend);
-            hideElement(collapseLegendIcon)
-            showElement(expandLegendIcon)
-        })
 
+        //show hide the legend and the alternativing expand/collapse buttons
+        legendIconContainer.addEventListener('click', () => {
+            if (collapseLegendIcon.classList.contains('hidden')) {
+                showElement(legend);
+                showElement(collapseLegendIcon);
+                hideElement(expandLegendIcon);
+            } else {
+                hideElement(legend);
+                hideElement(collapseLegendIcon);
+                showElement(expandLegendIcon);
+            }
+        });
 
     }
 

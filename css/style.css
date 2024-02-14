@@ -256,29 +256,39 @@ button:active:not(.prev-btn, .next-btn) {
 
 /* WINDY  STYLE*/
 #windy {
-    width: 100%;
-    height: 500px;
+    width: auto;
+    min-height: 500px;
     margin: 0;
     padding: 0;
-    /*height: auto;*/
 }
 .legendIcon{
     width: 35px;
-}
-
-#legendIconContainer{
-    position: absolute;
-    bottom: 60px;
-    left: 10px;
     opacity: .75;
 }
-#legendIconContainer:hover{
+/*.legendIcon:hover{
     opacity: 1;
+}*/
+#legendIconContainer{
+    position: absolute;
+    bottom: 70px;
+    left: 10px;
+    /*opacity: .75;*/
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    color: var(--light-color);
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 100px;
+    padding: 0 20px 0 0px;
+    border: 1.5px outset var(--highlight-color)
 }
-
+#legendIconContainer:active{
+    border: 1.5px inset var(--highlight-color)
+}
 #legendContainer{
     position: absolute;
-    bottom: 100px;
+    bottom: 110px;
     left: 10px;
     background-color: var(--primary-color);
     padding: 10px;
@@ -289,8 +299,6 @@ button:active:not(.prev-btn, .next-btn) {
     color: var(--light-color);
     z-index: 1000;
     opacity: .75;
-    /*gap: 1rem;*/
-    /*max-width: 25vw;*/
 }
 .pin-legends{
     display: flex;
