@@ -1,4 +1,4 @@
-import { convertCoordToLocation } from "./utils.mjs";
+import { convertCoordToLocation, capitalizeLocation } from "./utils.mjs";
 /* 
 ░█▄█░█▀█░█▀▄░▀█▀░█▀█░█▀█░░░█▀▀░█░░░█▀█░█▀▀░█▀▀
 ░█░█░█▀█░█▀▄░░█░░█░█░█▀█░░░█░░░█░░░█▀█░▀▀█░▀▀█
@@ -67,11 +67,11 @@ export default class Marina {
     */
     async renderMarinaDetails(selector){
         //method to generate HTML to display our product
-        const element = document.getElementById(selector);
-        element.insertAdjacentHTML(
-            "afterBegin",
+        //const element = document.getElementById(selector);
+        //element.insertAdjacentHTML(
+        //    "afterBegin",
             await this.marinaDetailsTemplate()
-        )
+        //)
         /* 
         ░█▀▀░█▀█░█▀▄░█▀█░█░█░█▀▀░█▀▀░█░░░░░█░█░█▀█░█▀█░█▀▄░█░░░█▀▀░█▀▄
         ░█░░░█▀█░█▀▄░█░█░█░█░▀▀█░█▀▀░█░░░░░█▀█░█▀█░█░█░█░█░█░░░█▀▀░█▀▄
@@ -104,54 +104,60 @@ export default class Marina {
     ░░▀░░▀▀▀░▀░▀░▀░░░▀▀▀░▀░▀░░▀░░▀▀▀
     */
     async marinaDetailsTemplate() {
-        const marinaDetailsImgContainer = this.buildImages();
-        const marinaDetailsRatings = this.buildRatings();
-        const marinaDetailsFuel = this.buildFuel();
-        const marinaLocation = await this.buildLocation();
+        const marinaDetailsImgHTML = this.buildImages();
+        const marinaDetailsRatingsHTML = this.buildRatings();
+        const marinaDetailsFuelHTML = this.buildFuel();
+        const marinaLocationHTML = await this.buildLocation();
         
-        return`
-            <h1 id="marina-name">${this.data.name}</h1>            
-            <div id="marina-details-card1">
-                <!-- #marinaDetailsImgContainer -->
-                
-                ${marinaDetailsImgContainer}
-                <!-- #marinaDetailsRatings -->
-                    <!-- #rating-count -->
-                    <!-- #stars -->
-                ${marinaDetailsRatings}
-                <div id='services' class="">
-                <h2 class="marinaDetails-services-title divider">Services & Amenities</h2>
-                    <!--#fuel-container .grid-container  -->
-                            <!-- #fuel-title-header  -->
-                            <!-- #fuel-icon-header  -->
-                            <!-- #fuel-price-header -->
-            
-                            <!-- .fuel-title -->
-                                <!-- <img> -->    
-                                <!-- #fuel-title-desc -->
-                                <!-- .fuel-icon -->
-                            <!-- .fuel-price(1) -->
-                            <!-- .fuel-price2 -->
-                            <!-- .fuel-price3 -->
-            
-                            <!-- .fuel-gap -->
-                        ${marinaDetailsFuel}
-                </div>
-                </div>
-                <div id="marina-details-card2">
-                <div id="windy" class="divider details-windy"></div>
-                <div id='locations' class="">
-                <h2 class="marinaDetails-services-title divider">Location Info</h2>
-                ${marinaLocation}
-                </div>
-            </div>
-        `;
+        //grab top div
+        const marinaDetailsDiv = document.getElementById('marina-details')
+        //top level name
+        const marinaNameTitle = document.createElement('h1');
+        marinaNameTitle.innerHTML = this.data.name;
+        //card1
+        const card1 = document.createElement('div');
+        const servicesDiv = document.createElement('div');
+        const servicesTitle = document.createElement('h2');
+
+        //build card1
+        servicesTitle.setAttribute('class', 'marinaDetails-services-title divider');
+        servicesTitle.innerHTML += 'Services & Amenities'
+        card1.innerHTML += marinaDetailsImgHTML;
+        card1.innerHTML += marinaDetailsRatingsHTML;
+        card1.appendChild(servicesDiv);
+        card1.setAttribute('id', 'marina-details-card1');
+        servicesDiv.appendChild(servicesTitle);
+        servicesDiv.innerHTML += marinaDetailsFuelHTML;
+        servicesDiv.setAttribute('id','services');
+
+        //build card 2
+        const card2 = document.createElement('div');
+        const windyDiv = document.getElementById('windy');
+        const locationsDiv = document.createElement('div');
+        const locationTitle = document.createElement('h2');
+        
+        //build locations div
+        locationTitle.setAttribute('class','marinaDetails-services-title divider' );
+        locationTitle.innerHTML += 'Location Info';
+        locationsDiv.setAttribute('id', 'locations');
+        locationsDiv.appendChild(locationTitle);
+        locationsDiv.innerHTML += marinaLocationHTML;
+        
+        //build card2
+        card2.setAttribute('id', 'marina-details-card2');
+        card2.appendChild(windyDiv);
+        card2.appendChild(locationsDiv);
+        
+        //put it together
+        marinaDetailsDiv.appendChild(marinaNameTitle)
+        marinaDetailsDiv.appendChild(card1)
+        marinaDetailsDiv.appendChild(card2)
     }
     buildImages(){
         //accomodating for multiple images...
         let imgElements ="";
         const name = this.data.name;
-        let marinaDetailsImgContainer = "";
+        let marinaDetailsImgHTML = "";
 
         let imgCount = this.data.images.data.length;
 
@@ -166,14 +172,14 @@ export default class Marina {
                 }
             });
             //default img container (what's used if there's only 1 img)
-            marinaDetailsImgContainer = `
+            marinaDetailsImgHTML = `
             <div id="marinaDetailsImgContainer">
                 <div class="carousel">${imgElements}</div>
             </div>
             `;
             //rebuild w/ carousel if theres >1 img
             if(imgCount >1){
-                marinaDetailsImgContainer = `
+                marinaDetailsImgHTML = `
                     <div id="marinaDetailsImgContainer">
                         <div class="carousel">${imgElements}</div>
                         <button class="prev-btn"><img src="./images/icons/left.svg" alt="left arrow"></button>
@@ -181,7 +187,7 @@ export default class Marina {
                     </div>
                 `;
             }
-            return marinaDetailsImgContainer;
+            return marinaDetailsImgHTML;
         }
         //return nothing if there's no images
         return "";
@@ -194,7 +200,7 @@ export default class Marina {
     }
     buildRatings() {
         let ratingCount = 0;
-        let marinaDetailsRatings = "";
+        let marinaDetailsRatingsHTML = "";
         if (this.data.rating != null) {
             ratingCount = this.data.review_count;
             const rating = this.data.rating;
@@ -221,10 +227,10 @@ export default class Marina {
                 <div id='star-container'>
                     <div id='stars'>${star1}${star2}${star3}${star4}${star5}</div>
                 </div>`;
-            marinaDetailsRatings = `
+            marinaDetailsRatingsHTML = `
                 <div id='marinaDetailsRatings'> ${starContainer} ${countContainer} </div>`
         }
-        return marinaDetailsRatings;
+        return marinaDetailsRatingsHTML;
     }
     createStarImage(isFull, isHalf) {
         if (isFull) {
@@ -324,9 +330,9 @@ export default class Marina {
         const what3words = this.data.location.what3words;
         let detailsLocation = "";
         const locationData = await convertCoordToLocation(lat, lon, true)
-        const road = locationData.road;
-        const city = locationData.city;
-        const state = locationData.state;
+        const road = capitalizeLocation(locationData.road);
+        const city = capitalizeLocation(locationData.city);
+        const state = capitalizeLocation(locationData.state);
         const addressPin = "./images/icons/black_pin.svg";
         const addressTarget = './images/icons/map_target.svg';
         const w3w = './images/icons/w3w_Symbol_RGB_Red.svg';

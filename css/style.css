@@ -424,6 +424,9 @@ footer{
     color: var(--light-color);
     width: 90%;
     margin: 0 auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
 }
 .fuel-details-container *{
     margin: auto 0 0 0;
