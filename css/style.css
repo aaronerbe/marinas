@@ -45,6 +45,12 @@ main{
     left: -9999px;
     transition: opacity 0.3s ease;
 }
+#windy.hidden{
+    position: absolute;
+}
+#windy.visible{
+    position: relative;
+}
 img {
     max-width: 100%;
 }
@@ -342,6 +348,12 @@ footer{
     /*margin: 3rem 0;*/
     background-color: var(--primary-color);
     color: var(--light-color);
+
+    
+    /*position: absolute;
+    right: 2rem;
+    transform: translate(50%, -200%);
+    width: 50%;*/
 }
 #footer-contact-container:hover{
     transition: .15s linear;
@@ -350,6 +362,13 @@ footer{
 #footer-contact-container:active{
     transition: .1s linear;
     transform: scale(.95);
+}
+#attribution{
+    text-decoration: none;
+    color: var(--light-color);
+}
+#attribution:hover{
+    color: var(--highlight-color);
 }
 
 
