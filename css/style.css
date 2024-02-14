@@ -299,6 +299,7 @@ button:active:not(.prev-btn, .next-btn) {
     color: var(--light-color);
     z-index: 1000;
     opacity: .75;
+    gap: 1rem;
 }
 .pin-legends{
     display: flex;
