@@ -535,6 +535,28 @@ footer{
     margin: auto 0
 }
 
+/* Attribution Specific */
+#attribution-images-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 3rem auto;
+}
+#attribution-images-grid h2{
+    grid-column: 1/-1;
+}
+#attributions-main{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 4rem 0;
+}
+#attributions-main *{
+    margin: 0.25rem;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+
 @media screen and (min-width: 800px) {
     body {
         max-width: 70%;
